@@ -1,5 +1,3 @@
 # Thesis_Work
 
-This is a line from RStudio
-
-This is another line. I deleted previous lines. 
+9/21/21 - Downloaded Basketball Reference Data and set up github
