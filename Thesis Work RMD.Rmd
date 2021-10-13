@@ -20,7 +20,7 @@ Shooting_Scrape <- read_csv("Basketball Reference Scrape.csv")
 ```
 
 ```{r}
-Shooting_Scrape %>%
+Shooting_Scrape <- Shooting_Scrape %>%
   separate(Player, c("Player_Name", "Player_ID"), sep = "\\\\")
 ```
 
