@@ -16,18 +16,12 @@ bref_stats<-bref_players_stats(seasons = 2009:2018, tables = c("totals", "per_ga
 ```
 
 ```{r}
-Shooting_Scrape <- read_csv("~/Desktop/Fall 2021/Honors Thesis Work/Basketball Reference Scrape.csv")
+Shooting_Scrape <- read_csv("Basketball Reference Scrape.csv")
 ```
 
 ```{r}
-Shooting_Scrape$Player_ID<-Shooting_Scrape$Player%>%
-  str_extract(pattern = "[^\\\\]+$")
-```
-
-```{r}
-Shooting_Scrape$Player_Name<-Shooting_Scrape$Player%>%
-    str_split( "\\\\" )%>%
-    sapply(head, 1 )
+Shooting_Scrape %>%
+  separate(Player, c("Player_Name", "Player_ID"), sep = "\\\\")
 ```
 
 ```{r}
