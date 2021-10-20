@@ -131,18 +131,10 @@ end_time - start_time
 table(m$classification)
 ```
 
+
 ```{r}
 master7 <- master5
 master7$group <- m$classification
 master7 <- cbind(master6, master7)
-Group1 <- master7%>%filter(group == 1)
-Group2 <- master7%>%filter(group == 2)
-Group3 <- master7%>%filter(group == 3)
-Group4 <- master7%>%filter(group == 4)
-Group5 <- master7%>%filter(group == 5)
-Group6 <- master7%>%filter(group == 6)
-Group7 <- master7%>%filter(group == 7)
-Group8 <- master7%>%filter(group == 8)
-Group9 <- master7%>%filter(group == 9)
+d <- purrr::map(1:9, ~ master7 %>% filter(group == {{.x}}))
 ```
-
