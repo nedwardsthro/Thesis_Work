@@ -138,3 +138,8 @@ master7$group <- m$classification
 master7 <- cbind(master6, master7)
 d <- purrr::map(1:9, ~ master7 %>% filter(group == {{.x}}))
 ```
+
+```{r}
+predict(m, newdata = master5[1,])
+```
+
