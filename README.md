@@ -51,16 +51,16 @@ bref_stats <- read_csv("bref_stats.csv")
 Shooting_Scrape <- read_csv("Basketball Reference Scrape.csv")
 ```
 
-    ## 
+    ## Rows: 6008 Columns: 29
+
     ## ── Column specification ────────────────────────────────────────────────────────
-    ## cols(
-    ##   .default = col_double(),
-    ##   Player = col_character(),
-    ##   Pos = col_character(),
-    ##   Tm = col_character(),
-    ##   Year = col_character()
-    ## )
-    ## ℹ Use `spec()` for the full column specifications.
+    ## Delimiter: ","
+    ## chr  (4): Player, Pos, Tm, Year
+    ## dbl (25): Age, G, MP, FG%, Dist., % of FGA by Distance 2P, % of FGA by Dista...
+
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
 Shooting_Scrape <- Shooting_Scrape %>%
@@ -108,6 +108,7 @@ plot1
 
 ``` r
 order<-c(54,55,57,58,59,60,47,61,50,53,9,73,101,106,107,100,111,108,109,96,97,98,99)
+order2<-c(2,1,3,11,12)
 ```
 
 ``` r
@@ -123,6 +124,7 @@ master4 <- master3 %>%
   na.omit()
 master5 <- master3 %>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
+master6 <- master[order2]
 ```
 
 ``` r
@@ -133,6 +135,34 @@ vis_miss(master3, cluster = TRUE)
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
-BIC <- mclustBIC(master4)
-Mclust(master4)
+start_time <- Sys.time()
+BIC <- mclustBIC(master5)
+m <- Mclust(master5)
+end_time <- Sys.time()
+end_time - start_time
+```
+
+    ## Time difference of 11.05287 hours
+
+``` r
+table(m$classification)
+```
+
+    ## 
+    ##   1   2   3   4   5   6   7   8   9 
+    ##  62 910 772 516 394 325 631 735 415
+
+``` r
+master7 <- master5
+master7$group <- m$classification
+master7 <- cbind(master6, master7)
+Group1 <- master7%>%filter(group == 1)
+Group2 <- master7%>%filter(group == 2)
+Group3 <- master7%>%filter(group == 3)
+Group4 <- master7%>%filter(group == 4)
+Group5 <- master7%>%filter(group == 5)
+Group6 <- master7%>%filter(group == 6)
+Group7 <- master7%>%filter(group == 7)
+Group8 <- master7%>%filter(group == 8)
+Group9 <- master7%>%filter(group == 9)
 ```
