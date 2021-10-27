@@ -41,30 +41,44 @@ bref_stats <- bref_players_stats(
 write_csv(bref_stats, file = "bref_stats.csv")
 ```
 
-```{r, message = FALSE, warning = FALSE}
-bref_stats <- read_csv("bref_stats.csv")
+```{r, eval = FALSE}
+bref_stats_new <- bref_players_stats(
+  seasons = 2019:2021,
+  tables = c("totals", "per_game", "advanced", "per_minute", "per_poss")
+  )
+write_csv(bref_stats_new, file = "bref_stats_new.csv")
 ```
 
+```{r, message = FALSE, warning = FALSE}
+bref_stats <- read_csv("bref_stats.csv")
+bref_stats_new <- read_csv("bref_stats_new.csv")
+```
 
 ```{r}
 Shooting_Scrape <- read_csv("Basketball Reference Scrape.csv")
+Shooting_Scrape_New <- read_csv("~/Desktop/Fall 2021/Honors Thesis Work/Basketball Reference Scrape2.csv")
 ```
 
 ```{r}
 Shooting_Scrape <- Shooting_Scrape %>%
   separate(Player, c("Player_Name", "Player_ID"), sep = "\\\\")
-```
-
-```{r}
 Shooting_Scrape$yearSeason <- as.double(Shooting_Scrape$Year %>%
                                           str_extract(pattern = "[^-]+$"))
-```
-
-```{r}
 Shooting_Scrape <- Shooting_Scrape %>%
   group_by(Player_Name, Age) %>%
   filter(G == max(G))
 ```
+
+```{r}
+Shooting_Scrape_New <- Shooting_Scrape_New %>%
+  separate(Player, c("Player_Name", "Player_ID"), sep = "\\\\")
+Shooting_Scrape_New$yearSeason <- as.double(Shooting_Scrape_New$Year %>%
+                                          str_extract(pattern = "[^-]+$"))
+Shooting_Scrape_New <- Shooting_Scrape_New %>%
+  group_by(Player_Name, Age) %>%
+  filter(G == max(G))
+```
+
 
 # Evaluate if we have the correct number of players)
 ```{r}
@@ -78,7 +92,6 @@ traded_thrice <- traded_twice %>%
   filter(nchar(slugTeamsBREF) > 15)
 Count_Games <- bref_stats %>%
   filter(countGames > 30)
-#Filter1<-game_data%>%filter(gp>30)
 ```
 
 ### Density Chart
@@ -100,35 +113,53 @@ order2<-c(2,1,3,11,12)
 master<-inner_join(
   bref_stats, 
   Shooting_Scrape, 
-  by = c("yearSeason" = "yearSeason", "slugPlayerBREF" = "Player_ID")
+  by = c("yearSeason" = "yearSeason", "slugPlayerBREF"= "Player_ID")
 )
 nums <- unlist(lapply(master, is.numeric))
 master2 <- master[nums]
+master2 <- master2%>%
+  filter(countGames >= 30)
 master3 <- master2[order]
 master4 <- master3 %>%
   na.omit()
 master5 <- master3 %>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
-master6 <- master[order2]
+master6 <- master2[order2]
 ```
 
 ```{r}
-library(visdat)
-vis_miss(master3, cluster = TRUE)
+new_master<-inner_join(
+  bref_stats_new, 
+  Shooting_Scrape_New, 
+  by = c("yearSeason" = "yearSeason", "slugPlayerBREF"= "Player_ID")
+)
+new_master2 <- new_master%>%
+  filter(countGames >= 30)
+new_master3 <- new_master2[nums]
+new_master4 <- new_master3[order]
+new_master4$`% of FGA by Distance (3-10)` <- as.numeric(new_master4$`% of FGA by Distance (3-10)`)
+new_master4$`% of FGA by Distance (10-16)` <- as.numeric(new_master4$`% of FGA by Distance (10-16)`)
+new_master5 <- new_master4 %>%
+  mutate(across(everything(), .fns = ~replace_na(., 0)))
+new_master6 <- new_master2[order2]
 ```
 
+
+```{r}
+library(visdat)
+vis_miss(new_master5, cluster = TRUE)
+```
 
 
 ```{r mclust, cache = TRUE}
 start_time <- Sys.time()
-BIC <- mclustBIC(master5)
 m <- Mclust(master5)
 end_time <- Sys.time()
 end_time - start_time
 ```
 
 ```{r}
-table(m$classification)
+prop.table(table(m$classification))
 ```
 
 
@@ -140,6 +171,16 @@ d <- purrr::map(1:9, ~ master7 %>% filter(group == {{.x}}))
 ```
 
 ```{r}
-predict(m, newdata = master5[1,])
+new_predictions <- predict(m, newdata = new_master5)
+new_master7 <- new_master5
+new_master7$pred <- new_predictions$classification
+new_master7 <- cbind(new_master6, new_master7)
+prop.table(table(new_master7$pred))
 ```
 
+```{r mclust2, cache = TRUE}
+start_time <- Sys.time()
+m2 <- Mclust(new_master5)
+end_time <- Sys.time()
+end_time - start_time
+```
