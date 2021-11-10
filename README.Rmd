@@ -25,6 +25,11 @@ mclustModel
 
 Potentially looking into doing dimension reduction in the future?
 
+11/9/21
+
+Initial model and second model don't really match. Even my initial model doesn't really match the output from the Sloan paper. 
+Heat map seemed to relatively work. I messed around a little bit with a k means model just for the heck of it. Things to look at for next week are more heat map stuff and also how certain we are each player is in a certain group? Is that how our analysis can be a little bit different? Sum across teams and that way players with multiple parts show up?
+
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(nbastatR)
@@ -97,7 +102,6 @@ write_csv(Player_Profile, "Player_Profile.csv")
 ```
 
 
-
 # Evaluate if we have the correct number of players)
 ```{r, eval = FALSE}
 not_traded <- bref_stats %>%
@@ -123,7 +127,7 @@ plot1
 
 ```{r}
 order<-c(115,54,55,57,58,59,60,47,61,50,53,9,73,101,106,107,100,111,108,109,96,97,98,99)
-order2<-c(2,1,3,11,12)
+order2<-c(2,1,3,11,12,109)
 ```
 
 
@@ -133,6 +137,25 @@ master<-inner_join(
   Shooting_Scrape, 
   by = c("yearSeason" = "yearSeason", "slugPlayerBREF"= "Player_ID"))
 master <- left_join(master, Player_Profile, by = c("idPlayerNBA" = "idPlayer"))
+master<-master%>%
+  mutate(heightInches = case_when(
+    namePlayer.x == "Andres Nocioni" ~ 79,
+    namePlayer.x == "Anthony Randolph" ~ 82,
+    namePlayer.x == "David Andersen" ~ 83,
+    namePlayer.x == "Dionte Christmas" ~ 77,
+    namePlayer.x == "Frank Mason III" ~ 71,
+    namePlayer.x == "Gustavo Ayon" ~ 82,
+    namePlayer.x == "Jeff Adrien" ~ 79,
+    namePlayer.x == "Joey Dorsey" ~ 80,
+    namePlayer.x == "Rudy Fernandez" ~ 78,
+    namePlayer.x == "Samardo Samuels" ~ 81,
+    namePlayer.x == "TJ Leaf" ~ 82,
+    namePlayer.x == "Tobias Harris" ~ 80,
+    namePlayer.x == "Tyler Hansbrough" ~ 81,
+    namePlayer.x == "Victor Claver" ~ 81,
+    namePlayer.x == "Vitor Luiz Faverani" ~ 83,
+    TRUE ~ heightInches
+  ))
 nums <- unlist(lapply(master, is.numeric))
 master2 <- master[nums]
 master2 <- master2%>%
@@ -152,6 +175,16 @@ new_master<-inner_join(
   by = c("yearSeason" = "yearSeason", "slugPlayerBREF"= "Player_ID")
 )
 new_master <- left_join(new_master, Player_Profile, by = c('idPlayerNBA' = "idPlayer"))
+new_master<-new_master%>%
+  mutate(heightInches = case_when(
+    namePlayer.x == "Frank Mason III" ~ 71,
+    namePlayer.x == "Landry Shamet" ~ 82,
+    namePlayer.x == "Nicolas Claxton" ~ 79,
+    namePlayer.x == "PJ Dozier" ~ 80,
+    namePlayer.x == "TJ Leaf" ~ 82,
+    namePlayer.x == "Tobias Harris" ~ 80,
+    TRUE ~ heightInches
+  ))
 new_master2 <- new_master%>%
   filter(countGames >= 30)
 new_master3 <- new_master2[nums]
@@ -170,6 +203,7 @@ vis_miss(new_master5, cluster = TRUE)
 
 
 ```{r mclust, cache = TRUE}
+set.seed(21)
 start_time <- Sys.time()
 m <- Mclust(master5, G = 9)
 end_time <- Sys.time()
@@ -185,6 +219,7 @@ d <- purrr::map(1:9, ~ master7%>%select_if(is.numeric) %>% filter(first_pred == 
 ```
 
 ```{r mclust2, cache = TRUE}
+set.seed(23)
 start_time <- Sys.time()
 m2 <- Mclust(new_master5, G = 9)
 end_time <- Sys.time()
@@ -192,21 +227,65 @@ end_time - start_time
 ```
 
 ```{r}
-new_master7 <- new_master5
-new_master7$second_pred <- m2$classification
-new_master7 <- cbind(new_master6, new_master7)
-d2 <- purrr::map(1:9, ~ new_master7%>%select_if(is.numeric) %>% filter(second_pred == {{.x}}))
-```
-
-
-```{r}
 new_predictions <- predict(m, newdata = new_master5[3711:4855,])
 new_master7 <- new_master5
 first_pred <- c(m$classification, new_predictions$classification)
 new_master7$first_pred <- first_pred
+new_master7$second_pred <- m2$classification
 new_master7 <- cbind(new_master6, new_master7)
+d2 <- purrr::map(1:9, ~ new_master7%>%select_if(is.numeric) %>% filter(second_pred == {{.x}}))
 prop.table(table(new_master7$first_pred))
+
+new_master7 <- new_master7%>%
+  mutate(First_Prediction = case_when(
+    first_pred == 1 ~ "Floor General",
+    first_pred == 2 ~ "Stretch Forward",
+    first_pred == 3 ~ "Mid Range Big",
+    first_pred == 4 ~ "Traditional Center",
+    first_pred == 5 ~ "Ball Dominant Scorer",
+    first_pred == 6 ~ "Versatile Role Player",
+    first_pred == 7 ~ "High Usage Guard",
+    first_pred == 8 ~ "Skilled Forward",
+    first_pred == 9 ~ "Three Point Shooting Guard"))
+new_master7 <- new_master7%>%
+  mutate(Second_Prediction = case_when(
+    second_pred == 1 ~ "Mid Range Big",
+    second_pred == 2 ~ "Stretch Forward",
+    second_pred == 3 ~ "Skilled Forward",
+    second_pred == 4 ~ "High Usage Guard",
+    second_pred == 5 ~ "Ball Dominant Scorer",
+    second_pred == 6 ~ "Traditional Center",
+    second_pred == 7 ~ "Versatile Role Player",
+    second_pred == 8 ~ "Floor General",
+    second_pred == 9 ~ "Three Point Shooting Guard"))
+new_master7 <- new_master7%>%
+  mutate(Match = (First_Prediction == Second_Prediction))
+mean(new_master7$Match)
+
+new_master7%>%
+  group_by(First_Prediction)%>%
+  summarize(n = n())
+new_master7%>%
+  group_by(Second_Prediction)%>%
+  summarize(n = n())
+new_master7%>%
+  filter(First_Prediction == "Ball Dominant Scorer" &
+        Second_Prediction != "Ball Dominant Scorer")
 ```
+
+```{r}
+set.seed(123)
+wss <- function(k) {
+  kmeans(new_master5, k, nstart = 10 )$tot.withinss
+}
+k.values <- 1:10
+wss_values <- map_dbl(k.values, wss)
+plot(k.values, wss_values,
+       type="b", pch = 19, frame = FALSE, 
+       xlab="Number of clusters K",
+       ylab="Total within-clusters sum of squares")
+```
+
 
 
 ```{r}
@@ -220,3 +299,17 @@ pred_2_mean<-map_df(d2, ~ .x %>% summarise(across(everything(), mean)))
 prop.table(table(m$classification))
 prop.table(table(m2$classification))
 ```
+
+```{r}
+Teams <- new_master7%>%
+  group_by(Tm, slugSeason, first_pred)%>%
+  summarise(total = n())
+  
+ggplot(Teams%>%filter(Tm == "CHI"), aes(x = slugSeason, y = first_pred, fill = total)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  scale_y_discrete(limits = c("1","2", "3", "4", "5", "6", "7", "8", "9"))+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+```
+
