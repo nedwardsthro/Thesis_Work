@@ -34,6 +34,8 @@ Heat map seemed to relatively work. I messed around a little bit with a k means 
 library(tidyverse)
 library(nbastatR)
 library(mclust)
+library(mlr)
+library(rsample)
 ```
 
 ```{r, eval = FALSE}
@@ -250,7 +252,7 @@ new_master7 <- new_master7%>%
 new_master7 <- new_master7%>%
   mutate(Second_Prediction = case_when(
     second_pred == 1 ~ "Mid Range Big",
-    second_pred == 2 ~ "Stretch Forward",
+second_pred == 2 ~ "Stretch Forward",
     second_pred == 3 ~ "Skilled Forward",
     second_pred == 4 ~ "High Usage Guard",
     second_pred == 5 ~ "Ball Dominant Scorer",
@@ -260,30 +262,54 @@ new_master7 <- new_master7%>%
     second_pred == 9 ~ "Three Point Shooting Guard"))
 new_master7 <- new_master7%>%
   mutate(Match = (First_Prediction == Second_Prediction))
-mean(new_master7$Match)
-
-new_master7%>%
-  group_by(First_Prediction)%>%
-  summarize(n = n())
-new_master7%>%
-  group_by(Second_Prediction)%>%
-  summarize(n = n())
-new_master7%>%
-  filter(First_Prediction == "Ball Dominant Scorer" &
-        Second_Prediction != "Ball Dominant Scorer")
 ```
 
-```{r}
+```{r z-values}
+zvalues <- rbind(m$z, new_predictions$z)
+zvalues <- cbind(new_master6, zvalues)
+zvalues <- zvalues%>%
+  rename("Floor General" = `1`,
+         "Stretch Forward" = `2`,
+         "Mid Range Big" = `3`,
+         "Traditional Center" = `4`,
+         "Ball Dominant Scorer" = `5`,
+         "Versatile Role Player" = `6`,
+         "High Usage Guard" = `7`,
+         "Skilled Forward" = `8`,
+         "Three Point Shooting Guard" = `9`)
+
+Teams2<-zvalues%>%
+  group_by(Tm, slugSeason)%>%
+  summarize(Floor_General = sum(`Floor General`),
+            Stretch_Forward = sum(`Stretch Forward`),
+            Mid_Range_Big = sum(`Mid Range Big`), 
+            Traditional_Center = sum(`Traditional Center`),
+            Ball_Dominant_Scorer = sum(`Ball Dominant Scorer`),
+            Versatile_Role_Player = sum(`Versatile Role Player`),
+            High_Usage_Guard = sum(`High Usage Guard`),
+            Skilled_Forward = sum(`Skilled Forward`), 
+            Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))
+Teams2 <- Teams2%>%pivot_longer(cols = c(3:11))
+```
+
+
+```{r, eval = FALSE}
 set.seed(123)
-wss <- function(k) {
-  kmeans(new_master5, k, nstart = 10 )$tot.withinss
+cv = vfold_cv(master5, v = 5)
+wss <- function(df) {
+  model = kmeans(df, centers = 5, nstart = 10 )
+  print(summary(model))
 }
 k.values <- 1:10
-wss_values <- map_dbl(k.values, wss)
+wss(data_frame(cv[1,1]))
+wss_values <- map_df(cv$splits, .f = wss(.))
 plot(k.values, wss_values,
        type="b", pch = 19, frame = FALSE, 
        xlab="Number of clusters K",
        ylab="Total within-clusters sum of squares")
+wss <- function(df) {
+  kmeans(df, centers = 5, nstart = 10 )$tot.withinss
+}
 ```
 
 
@@ -301,15 +327,12 @@ prop.table(table(m2$classification))
 ```
 
 ```{r}
-Teams <- new_master7%>%
-  group_by(Tm, slugSeason, first_pred)%>%
-  summarise(total = n())
-  
-ggplot(Teams%>%filter(Tm == "CHI"), aes(x = slugSeason, y = first_pred, fill = total)) +
+ggplot(Teams2%>%filter(Tm == "GSW"), aes(x = slugSeason, y = name, fill = value)) +
   geom_tile()+
   scale_fill_gradient(low="pink", high="red")+
-  scale_y_discrete(limits = c("1","2", "3", "4", "5", "6", "7", "8", "9"))+
   theme_bw()+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
 ```
+
+
 
