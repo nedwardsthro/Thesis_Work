@@ -36,6 +36,9 @@ library(nbastatR)
 library(mclust)
 library(mlr)
 library(rsample)
+library(tidymodels)
+library(kknn)
+options(scipen = 99)
 ```
 
 ```{r, eval = FALSE}
@@ -236,7 +239,6 @@ new_master7$first_pred <- first_pred
 new_master7$second_pred <- m2$classification
 new_master7 <- cbind(new_master6, new_master7)
 d2 <- purrr::map(1:9, ~ new_master7%>%select_if(is.numeric) %>% filter(second_pred == {{.x}}))
-prop.table(table(new_master7$first_pred))
 
 new_master7 <- new_master7%>%
   mutate(First_Prediction = case_when(
@@ -290,29 +292,29 @@ Teams2<-zvalues%>%
             Skilled_Forward = sum(`Skilled Forward`), 
             Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))
 Teams2 <- Teams2%>%pivot_longer(cols = c(3:11))
+Teams2 <- Teams2%>%
+  group_by(Tm, slugSeason)%>%
+  summarize(name = name, 
+            value = value,
+            Normalized = value/sum(value))
+Seasons <- zvalues%>%
+  group_by(slugSeason)%>%
+  summarize(Floor_General = sum(`Floor General`),
+            Stretch_Forward = sum(`Stretch Forward`),
+            Mid_Range_Big = sum(`Mid Range Big`), 
+            Traditional_Center = sum(`Traditional Center`),
+            Ball_Dominant_Scorer = sum(`Ball Dominant Scorer`),
+            Versatile_Role_Player = sum(`Versatile Role Player`),
+            High_Usage_Guard = sum(`High Usage Guard`),
+            Skilled_Forward = sum(`Skilled Forward`), 
+            Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))%>%
+  pivot_longer(cols = c(2:10))%>%
+  group_by(slugSeason)%>%
+  summarize(slugSeason = slugSeason,
+            name = name,
+            value = value, 
+            Normalized = value/sum(value))
 ```
-
-
-```{r, eval = FALSE}
-set.seed(123)
-cv = vfold_cv(master5, v = 5)
-wss <- function(df) {
-  model = kmeans(df, centers = 5, nstart = 10 )
-  print(summary(model))
-}
-k.values <- 1:10
-wss(data_frame(cv[1,1]))
-wss_values <- map_df(cv$splits, .f = wss(.))
-plot(k.values, wss_values,
-       type="b", pch = 19, frame = FALSE, 
-       xlab="Number of clusters K",
-       ylab="Total within-clusters sum of squares")
-wss <- function(df) {
-  kmeans(df, centers = 5, nstart = 10 )$tot.withinss
-}
-```
-
-
 
 ```{r}
 pred_1_median<-map_df(d, ~ .x %>% summarise(across(everything(), median)))
@@ -327,12 +329,45 @@ prop.table(table(m2$classification))
 ```
 
 ```{r}
-ggplot(Teams2%>%filter(Tm == "GSW"), aes(x = slugSeason, y = name, fill = value)) +
+ggplot(Teams2%>%filter(Tm == "GSW"), aes(x = slugSeason, y = name, fill = Normalized)) +
   geom_tile()+
   scale_fill_gradient(low="pink", high="red")+
   theme_bw()+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
 ```
 
+```{r}
+ggplot(Seasons, aes(x = slugSeason, y = name, fill = Normalized)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+```
 
+```{r, eval = FALSE}
+new_master8 <- cbind("Pred" = new_master7$First_Prediction, new_master5)
+new_master8$Pred <- as.factor(new_master8$Pred)
+set.seed(123)
+cv = vfold_cv(new_master8, v = 5)
+
+grid <-expand_grid(neighbors = c(1:9))
+spec <- nearest_neighbor(
+  mode = "classification", 
+  neighbors = tune(), 
+  weight_func = NULL,
+  dist_power = NULL)
+
+results_1<-tune_grid(spec, Pred ~ ., grid = grid, resamples = cv)
+```
+
+```{r}
+m3 <- Mclust(scaled_new_master5, G = 6)
+scaled_new_master5 <- scale(new_master5)
+new_master9 <- cbind(new_master6,data.frame(new_master5))
+new_master9$new_model <- m3$classification
+d3 <- purrr::map(1:6, ~ new_master9%>%select_if(is.numeric) %>% filter(new_model== {{.x}}))
+pred_3_median<-map_df(d3, ~ .x %>% summarise(across(everything(), median)))
+pred_3_mean<-map_df(d3, ~ .x %>% summarise(across(everything(), mean)))
+new_master9%>%filter(new_model == 3)
+```
 
