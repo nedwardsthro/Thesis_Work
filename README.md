@@ -2,76 +2,26 @@ Thesis Work
 ================
 Noah Edwards-Thro
 
-9/21/21 - Downloaded Basketball Reference Data and set up github
-
-603 rows of traded players, 39 double traded, 1 triple traded 603+39+1
-643 +4762
-
-5512 in the original Sloan Article. there are 5405 in ours. In data that
-matters (players with more than 30 games), we have slightly 68 more
-observations, likely again due to the traded feature, but working the
-opposite direction now. Say a player plays 25 games with one team and 25
-games with another. The Sloan article won’t pick that player up because
-he didn’t play more than 30 games for either team. We will pick that
-player up because it will show up as 50 games for us.
-
-Because of the data structure (our data having one line per season even
-if the player is traded vs. their data likely having multiple lines per
-season if the player is traded), our density plots will be different.
-
-Update 10/6 below
-
-See new Geom\_density with scraped data
-
-Used Mclust Also useful mclustBIC and mclustBICupdate mclustModel
-
-Potentially looking into doing dimension reduction in the future?
-
-11/9/21
-
-Initial model and second model don’t really match. Even my initial model
-doesn’t really match the output from the Sloan paper. Heat map seemed to
-relatively work. I messed around a little bit with a k means model just
-for the heck of it. Things to look at for next week are more heat map
-stuff and also how certain we are each player is in a certain group? Is
-that how our analysis can be a little bit different? Sum across teams
-and that way players with multiple parts show up?
-
 ``` r
 library(tidyverse)
 library(nbastatR)
 library(mclust)
 library(mlr)
 library(rsample)
+library(tidymodels)
+library(kknn)
+options(scipen = 99)
 ```
 
 ``` r
-Sys.setenv("VROOM_CONNECTION_SIZE" = 131072*2)
-
-bref_stats <- bref_players_stats(
-  seasons = 2009:2018,
-  tables = c("totals", "per_game", "advanced", "per_minute", "per_poss")
-  )
-
-write_csv(bref_stats, file = "bref_stats.csv")
-
-bref_stats_new <- bref_players_stats(
-  seasons = 2019:2021,
-  tables = c("totals", "per_game", "advanced", "per_minute", "per_poss")
-  )
-
-write_csv(bref_stats_new, file = "bref_stats_new.csv")
-```
-
-``` r
+combined_standings <- read_csv("~/Documents/Sports Analytics Work/OKC Thunder Application/combined_standings.csv")
 bref_stats <- read_csv("bref_stats.csv")
 bref_stats_new <- read_csv("bref_stats_new.csv")
-```
 
-``` r
 columns<-list("c","c","i","c","i","i","d","d","c","d","d","d","d","d","d","d","d","d","d","d","d","d","d","d", "d", "d", "d", "d", "d")
 Shooting_Scrape <- read_csv("Basketball Reference Scrape.csv", col_types = columns)
 Shooting_Scrape_New <- read_csv("~/Desktop/Fall 2021/Honors Thesis Work/Basketball Reference Scrape2.csv", col_types = columns)
+Player_Profile <- read_csv("Player_Profile.csv")
 ```
 
 ``` r
@@ -90,51 +40,10 @@ Shooting_Scrape_New$yearSeason <- as.double(Shooting_Scrape_New$Year %>%
 Shooting_Scrape_New <- Shooting_Scrape_New %>%
   group_by(Player_Name, Age) %>%
   filter(G == max(G))
-
-Player_Profile <- read_csv("Player_Profile.csv")
-```
-
-    ## Rows: 1487 Columns: 3
-
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (1): namePlayer
-    ## dbl (2): idPlayer, heightInches
-
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
 Shooting_Scrape_Total <- rbind(Shooting_Scrape, Shooting_Scrape_New)
-bref_stats_total <- rbind(bref_stats, bref_stats_new)
-player_IDS <- bref_stats_total%>%select(idPlayerNBA)%>%unique()
-player_IDS <- player_IDS[1281:1509,]
-
-for (i in 1:length(player_IDS$idPlayerNBA)){
-  player = player_profiles(player_ids = player_IDS$idPlayerNBA[i])
-  player = player%>%select(idPlayer, namePlayer, heightInches)
-  Player_Profile <- rbind(Player_Profile, player)
-  print(i)
-}
-Player_Profile <- Player_Profile%>%unique()
-write_csv(Player_Profile, "Player_Profile.csv")
 ```
 
-# Evaluate if we have the correct number of players)
-
-``` r
-not_traded <- bref_stats %>%
-  filter(slugTeamBREF != "TOT")
-traded <- bref_stats %>%
-  filter(slugTeamBREF == "TOT")
-traded_twice <- traded %>%
-  filter(nchar(slugTeamsBREF) >9)
-traded_thrice <- traded_twice %>%
-  filter(nchar(slugTeamsBREF) > 15)
-Count_Games <- bref_stats %>%
-  filter(countGames > 30)
-```
+    ## Warning: One or more parsing issues, see `problems()` for details
 
 ### Density Chart
 
@@ -143,7 +52,7 @@ plot1 <- ggplot(Shooting_Scrape, aes(x = G)) +
   geom_density()
 plot2 <- ggplot(bref_stats, aes(x = countGames)) +
   geom_density()
-plot1
+plot2
 ```
 
 ``` r
@@ -177,15 +86,27 @@ master<-master%>%
     TRUE ~ heightInches
   ))
 nums <- unlist(lapply(master, is.numeric))
-master2 <- master[nums]
-master2 <- master2%>%
-  filter(countGames >= 30)
-master3 <- master2[order]
-master5 <- master3 %>%
+master_data <- master[nums]%>%
+  filter(countGames >= 30)%>%
+  select(order)%>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
-master6 <- master%>%
+```
+
+    ## Note: Using an external vector in selections is ambiguous.
+    ## ℹ Use `all_of(order)` instead of `order` to silence this message.
+    ## ℹ See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+    ## This message is displayed once per session.
+
+``` r
+scaled_master_data <- data.frame(scale(master_data))
+scaled_master_labels <- master%>%
   filter(countGames >= 30)%>%
   select(all_of(order2))
+```
+
+``` r
+summary(master_data)
+summary(new_master_data)
 ```
 
 ``` r
@@ -205,101 +126,92 @@ new_master<-new_master%>%
     namePlayer.x == "Tobias Harris" ~ 80,
     TRUE ~ heightInches
   ))
-new_master2 <- new_master%>%
-  filter(countGames >= 30)
-new_master3 <- new_master2[nums]
-new_master4 <- new_master3[order]
-new_master5 <- new_master4 %>%
+new_master_data <- new_master[nums]%>%
+  filter(countGames >= 30)%>%
+  select(order)%>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
-```
-
-    ## Warning: One or more parsing issues, see `problems()` for details
-
-``` r
-new_master5 <- rbind(master5, new_master5)
-new_master6 <- new_master2[order2]
-new_master6 <- rbind(master6, new_master6)
+scaled_new_master_data <- data.frame(scale(new_master_data))
+scaled_combined_data<- rbind(scaled_master_data, scaled_new_master_data)
+scaled_new_master_labels <- new_master[order2]%>%filter(countGames >= 30)
+combined_master_labels <- rbind(scaled_master_labels, scaled_new_master_labels)
 ```
 
 ``` r
 library(visdat)
-vis_miss(new_master5, cluster = TRUE)
+vis_miss(new_master_data, cluster = TRUE)
 ```
+
+``` r
+set.seed(20)
+start_time <- Sys.time()
+scaled_m <- Mclust(scaled_master_data, G = 9)
+end_time <- Sys.time()
+end_time - start_time
+```
+
+    ## Time difference of 24.67887 secs
 
 ``` r
 set.seed(21)
 start_time <- Sys.time()
-m <- Mclust(master5, G = 9)
+scaled_m2 <- Mclust(scaled_combined_data, G = 9)
 end_time <- Sys.time()
 end_time - start_time
 ```
 
-    ## Time difference of 5.303455 mins
+    ## Time difference of 34.82518 secs
 
 ``` r
-master7 <- master5
-master7$first_pred <- m$classification
-master7 <- cbind(master6, master7)
-d <- purrr::map(1:9, ~ master7%>%select_if(is.numeric) %>% filter(first_pred == {{.x}}))
+scaled_new_predictions <- predict(scaled_m, newdata = scaled_new_master_data)
+original_pred <- c(scaled_m$classification, scaled_new_predictions$classification)
+new_pred <- scaled_m2$classification
+scaled_combined_preds <- cbind(original_pred, new_pred, combined_master_labels, scaled_combined_data)
+scaled_d <- purrr::map(1:9, ~ scaled_combined_preds%>%select_if(is.numeric) %>% filter(original_pred == {{.x}}))
+cbind(scaled_new_predictions$classification, scaled_new_master_data)%>%
+  group_by(scaled_new_predictions$classification)%>%
+  count()
 ```
 
-``` r
-set.seed(23)
-start_time <- Sys.time()
-m2 <- Mclust(new_master5, G = 9)
-end_time <- Sys.time()
-end_time - start_time
-```
-
-    ## Time difference of 9.385853 mins
-
-``` r
-new_predictions <- predict(m, newdata = new_master5[3711:4855,])
-new_master7 <- new_master5
-first_pred <- c(m$classification, new_predictions$classification)
-new_master7$first_pred <- first_pred
-new_master7$second_pred <- m2$classification
-new_master7 <- cbind(new_master6, new_master7)
-d2 <- purrr::map(1:9, ~ new_master7%>%select_if(is.numeric) %>% filter(second_pred == {{.x}}))
-prop.table(table(new_master7$first_pred))
-```
-
-    ## 
-    ##          1          2          3          4          5          6          7 
-    ## 0.15818744 0.17981462 0.08074150 0.11719876 0.08321318 0.03316169 0.22100927 
-    ##          8          9 
-    ## 0.09577755 0.03089598
+    ## # A tibble: 7 × 2
+    ## # Groups:   scaled_new_predictions$classification [7]
+    ##   `scaled_new_predictions$classification`     n
+    ##                                     <int> <int>
+    ## 1                                       1     9
+    ## 2                                       2    21
+    ## 3                                       3    33
+    ## 4                                       6   984
+    ## 5                                       7     7
+    ## 6                                       8    29
+    ## 7                                       9    62
 
 ``` r
-new_master7 <- new_master7%>%
+scaled_combined_preds <- scaled_combined_preds%>%
   mutate(First_Prediction = case_when(
-    first_pred == 1 ~ "Floor General",
-    first_pred == 2 ~ "Stretch Forward",
-    first_pred == 3 ~ "Mid Range Big",
-    first_pred == 4 ~ "Traditional Center",
-    first_pred == 5 ~ "Ball Dominant Scorer",
-    first_pred == 6 ~ "Versatile Role Player",
-    first_pred == 7 ~ "High Usage Guard",
-    first_pred == 8 ~ "Skilled Forward",
-    first_pred == 9 ~ "Three Point Shooting Guard"))
-new_master7 <- new_master7%>%
-  mutate(Second_Prediction = case_when(
-    second_pred == 1 ~ "Mid Range Big",
-second_pred == 2 ~ "Stretch Forward",
-    second_pred == 3 ~ "Skilled Forward",
-    second_pred == 4 ~ "High Usage Guard",
-    second_pred == 5 ~ "Ball Dominant Scorer",
-    second_pred == 6 ~ "Traditional Center",
-    second_pred == 7 ~ "Versatile Role Player",
-    second_pred == 8 ~ "Floor General",
-    second_pred == 9 ~ "Three Point Shooting Guard"))
-new_master7 <- new_master7%>%
-  mutate(Match = (First_Prediction == Second_Prediction))
+    original_pred == 1 ~ "Floor General",
+    original_pred == 2 ~ "Stretch Forward",
+    original_pred == 3 ~ "Mid Range Big",
+    original_pred == 4 ~ "Traditional Center",
+    original_pred == 5 ~ "Ball Dominant Scorer",
+    original_pred == 6 ~ "Versatile Role Player",
+    original_pred == 7 ~ "High Usage Guard",
+    original_pred == 8 ~ "Skilled Forward",
+    original_pred == 9 ~ "Three Point Shooting Guard"))
+scaled_combined_preds <- scaled_combined_preds%>%
+  mutate(New_Prediction = case_when(
+    new_pred == 1 ~ "Mid Range Big",
+    new_pred == 2 ~ "Stretch Forward",
+    new_pred == 3 ~ "Skilled Forward",
+    new_pred == 4 ~ "High Usage Guard",
+    new_pred == 5 ~ "Ball Dominant Scorer",
+    new_pred == 6 ~ "Traditional Center",
+    new_pred == 7 ~ "Versatile Role Player",
+    new_pred == 8 ~ "Floor General",
+    new_pred == 9 ~ "Three Point Shooting Guard"))
 ```
 
 ``` r
-zvalues <- rbind(m$z, new_predictions$z)
-zvalues <- cbind(new_master6, zvalues)
+zvalues <- rbind(scaled_m$z, scaled_new_predictions$z)
+zvalues <- cbind(combined_master_labels, zvalues)
 zvalues <- zvalues%>%
   rename("Floor General" = `1`,
          "Stretch Forward" = `2`,
@@ -311,7 +223,8 @@ zvalues <- zvalues%>%
          "Skilled Forward" = `8`,
          "Three Point Shooting Guard" = `9`)
 
-Teams2<-zvalues%>%
+
+Teams<-zvalues%>%
   group_by(Tm, slugSeason)%>%
   summarize(Floor_General = sum(`Floor General`),
             Stretch_Forward = sum(`Stretch Forward`),
@@ -321,33 +234,103 @@ Teams2<-zvalues%>%
             Versatile_Role_Player = sum(`Versatile Role Player`),
             High_Usage_Guard = sum(`High Usage Guard`),
             Skilled_Forward = sum(`Skilled Forward`), 
-            Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))
+            Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))%>%
+  ungroup()
 ```
 
     ## `summarise()` has grouped output by 'Tm'. You can override using the `.groups` argument.
 
 ``` r
-Teams2 <- Teams2%>%pivot_longer(cols = c(3:11))
+Teams_Total <- Teams%>%
+  mutate(Totals = rowSums(Teams%>%select(3:11)))%>%
+  mutate(Season = as.numeric(str_sub(slugSeason, start = 1, end = 4))+1)
+
+Standings <- combined_standings%>%
+  select(season, team_short, win_pct)
+Teams_Total<-inner_join(Standings, Teams_Total, by = c("season" = "Season", "team_short" = "Tm"))
+  
+Teams2<-Teams%>%
+  pivot_longer(cols = c(3:11))%>%
+  group_by(Tm, slugSeason)%>%
+  summarize(name = name, 
+            value = value,
+            Normalized = value/sum(value))%>%
+  ungroup()
 ```
 
+    ## `summarise()` has grouped output by 'Tm', 'slugSeason'. You can override using the `.groups` argument.
+
 ``` r
-set.seed(123)
-cv = vfold_cv(master5, v = 5)
-wss <- function(df) {
-  model = kmeans(df, centers = 5, nstart = 10 )
-  print(summary(model))
-}
-k.values <- 1:10
-wss(data_frame(cv[1,1]))
-wss_values <- map_df(cv$splits, .f = wss(.))
-plot(k.values, wss_values,
-       type="b", pch = 19, frame = FALSE, 
-       xlab="Number of clusters K",
-       ylab="Total within-clusters sum of squares")
-wss <- function(df) {
-  kmeans(df, centers = 5, nstart = 10 )$tot.withinss
-}
+Teams_Total <- Teams_Total%>%
+  mutate_at(.vars = c(5:13), funs(. / Totals))
 ```
+
+    ## Warning: `funs()` was deprecated in dplyr 0.8.0.
+    ## Please use a list of either functions or lambdas: 
+    ## 
+    ##   # Simple named list: 
+    ##   list(mean = mean, median = median)
+    ## 
+    ##   # Auto named with `tibble::lst()`: 
+    ##   tibble::lst(mean, median)
+    ## 
+    ##   # Using lambdas
+    ##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+
+``` r
+High_Wins <- Teams_Total%>%
+  filter(win_pct >= .6)
+Low_Wins <- Teams_Total%>%
+  filter(win_pct <= .4)
+Medium_Wins <- Teams_Total%>%
+  filter(win_pct > .4 & win_pct < .6)
+High_Wins <- High_Wins %>%
+  pivot_longer(cols = c(5:13))%>%
+  group_by(season,name)%>%
+  summarize(Norm = mean(value))
+```
+
+    ## `summarise()` has grouped output by 'season'. You can override using the `.groups` argument.
+
+``` r
+Low_Wins <- Low_Wins %>%
+  pivot_longer(cols = c(5:13))%>%
+  group_by(season,name)%>%
+  summarize(Norm = mean(value))
+```
+
+    ## `summarise()` has grouped output by 'season'. You can override using the `.groups` argument.
+
+``` r
+Medium_Wins <- Medium_Wins %>%
+  pivot_longer(cols = c(5:13))%>%
+  group_by(season,name)%>%
+  summarize(Norm = mean(value))
+```
+
+    ## `summarise()` has grouped output by 'season'. You can override using the `.groups` argument.
+
+``` r
+Seasons <- zvalues%>%
+  group_by(slugSeason)%>%
+  summarize(Floor_General = sum(`Floor General`),
+            Stretch_Forward = sum(`Stretch Forward`),
+            Mid_Range_Big = sum(`Mid Range Big`), 
+            Traditional_Center = sum(`Traditional Center`),
+            Ball_Dominant_Scorer = sum(`Ball Dominant Scorer`),
+            Versatile_Role_Player = sum(`Versatile Role Player`),
+            High_Usage_Guard = sum(`High Usage Guard`),
+            Skilled_Forward = sum(`Skilled Forward`), 
+            Three_Point_Shooting_Guard = sum(`Three Point Shooting Guard`))%>%
+  pivot_longer(cols = c(2:10))%>%
+  group_by(slugSeason)%>%
+  summarize(slugSeason = slugSeason,
+            name = name,
+            value = value, 
+            Normalized = value/sum(value))
+```
+
+    ## `summarise()` has grouped output by 'slugSeason'. You can override using the `.groups` argument.
 
 ``` r
 pred_1_median<-map_df(d, ~ .x %>% summarise(across(everything(), median)))
@@ -357,16 +340,120 @@ pred_2_mean<-map_df(d2, ~ .x %>% summarise(across(everything(), mean)))
 ```
 
 ``` r
-prop.table(table(m$classification))
-prop.table(table(m2$classification))
-```
-
-``` r
-ggplot(Teams2%>%filter(Tm == "GSW"), aes(x = slugSeason, y = name, fill = value)) +
+ggplot(Teams2%>%filter(Tm == "GSW"), aes(x = slugSeason, y = name, fill = Normalized)) +
   geom_tile()+
   scale_fill_gradient(low="pink", high="red")+
   theme_bw()+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
+ggplot(Seasons, aes(x = slugSeason, y = name, fill = Normalized)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+``` r
+p1 <- ggplot(Medium_Wins, aes(x = season, y = name, fill = Norm)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+p2 <- ggplot(Low_Wins, aes(x = season, y = name, fill = Norm)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+p3 <- ggplot(High_Wins, aes(x = season, y = name, fill = Norm)) +
+  geom_tile()+
+  scale_fill_gradient(low="pink", high="red")+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.text.x = element_text(angle = 45, vjust = .5))
+```
+
+# Data with Dimension Reduction
+
+``` r
+reduced_data <- master[nums]%>%
+  filter(countGames >= 30 & minutesPerGame >=15)%>%
+  select(order)%>%
+  mutate(across(everything(), .fns = ~replace_na(., 0)))
+reduced_data_labels <- master%>%
+  filter(countGames >= 30 & minutesPerGame >=15)%>%
+  select(order2)
+```
+
+    ## Note: Using an external vector in selections is ambiguous.
+    ## ℹ Use `all_of(order2)` instead of `order2` to silence this message.
+    ## ℹ See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+    ## This message is displayed once per session.
+
+``` r
+reduced_data <- reduced_data%>%
+  mutate(Short_Range_Perc = `% of FGA by Distance (0-3)` + `% of FGA by Distance (3-10)`,
+         Mid_Range_Perc = `% of FGA by Distance (10-16)` + `% of FGA by Distance (10-16)`)%>%
+ select(1,2,3,4,7,8,9,11,14,15,17,25,26)
+scaled_reduced_data <- data.frame(scale(reduced_data))
+```
+
+``` r
+reduced_new_data <- new_master[nums]%>%
+  filter(countGames >= 30 & minutesPerGame >=15)%>%
+  select(order)%>%
+  mutate(across(everything(), .fns = ~replace_na(., 0)))
+reduced_new_data_labels <- new_master%>%
+  filter(countGames >= 30 & minutesPerGame >=15)%>%
+  select(order2)
+reduced_new_data <- reduced_new_data%>%
+  mutate(Short_Range_Perc = `% of FGA by Distance (0-3)` + `% of FGA by Distance (3-10)`,
+         Mid_Range_Perc = `% of FGA by Distance (10-16)` + `% of FGA by Distance (10-16)`)%>%
+ select(1,2,3,4,7,8,9,11,14,15,17,25,26)
+scaled_reduced_new_data <- data.frame(scale(reduced_new_data))
+```
+
+``` r
+set.seed(21)
+start_time <- Sys.time()
+reduced_m <- Mclust(scaled_reduced_data, G = 6)
+end_time <- Sys.time()
+end_time - start_time
+```
+
+    ## Time difference of 6.878915 secs
+
+``` r
+reduced_predictions <- reduced_m$classification
+reduced_new_predictions <- predict(reduced_m, newdata = reduced_new_data)
+reduced_preds <- cbind(reduced_predictions, reduced_data)
+reduced_preds%>%
+  group_by(reduced_predictions)%>%
+  summarize(count = n())
+```
+
+    ## # A tibble: 6 × 2
+    ##   reduced_predictions count
+    ##                 <dbl> <int>
+    ## 1                   1   415
+    ## 2                   2   612
+    ## 3                   3   756
+    ## 4                   4   965
+    ## 5                   5    79
+    ## 6                   6   116
+
+``` r
+reduced_new_preds <- cbind(reduced_new_predictions$classification, reduced_new_data)
+reduced_new_preds%>%
+  group_by(reduced_new_predictions$classification)%>%
+  summarize(count = n())
+```
+
+    ## # A tibble: 1 × 2
+    ##   `reduced_new_predictions$classification` count
+    ##                                      <int> <int>
+    ## 1                                        4   946
