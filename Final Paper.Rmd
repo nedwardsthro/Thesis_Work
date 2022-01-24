@@ -40,3 +40,5 @@ In Kalman and Bosch's analysis, they filtered the data so that only observations
 ## Variable Selection
 
 I used the same variables that Kalman and Bosch used in their model. The variables were a combination of offensive, defensive, and aggregate  statistics and all statistics were calculated as rates except for player height. The drawback of these rate statistics is that it does not take into account how much a player is on the court. For instance, a player who plays 10 minutes a night could have the same rate statistics as a player who plays 35 minutes a night, but we would consider these players very different in their abilities (largely due to the 35 minute player being able to play efficiently for 35 minutes). 
+
+Change
