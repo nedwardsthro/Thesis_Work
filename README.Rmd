@@ -52,7 +52,7 @@ plot1 <- ggplot(Shooting_Scrape, aes(x = G)) +
   geom_density()
 plot2 <- ggplot(bref_stats, aes(x = countGames)) +
   geom_density()
-plot2
+plot1
 ```
 
 ```{r}
@@ -88,22 +88,9 @@ master<-master%>%
   ))
 nums <- unlist(lapply(master, is.numeric))
 master_data <- master[nums]%>%
-  filter(countGames >= 30)%>%
+  filter(countGames > 30)%>%
   select(order)%>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
-scaled_master_data <- data.frame(scale(master_data))
-scaled_master_labels <- master%>%
-  filter(countGames >= 30)%>%
-  select(all_of(order2))
-```
-
-```{r, eval = FALSE}
-summary(master_data)
-summary(new_master_data)
-```
-
-
-```{r}
 new_master<-inner_join(
   bref_stats_new, 
   Shooting_Scrape_New, 
@@ -121,13 +108,25 @@ new_master<-new_master%>%
     TRUE ~ heightInches
   ))
 new_master_data <- new_master[nums]%>%
-  filter(countGames >= 30)%>%
+  filter(countGames > 30)%>%
   select(order)%>%
   mutate(across(everything(), .fns = ~replace_na(., 0)))
-scaled_new_master_data <- data.frame(scale(new_master_data))
-scaled_combined_data<- rbind(scaled_master_data, scaled_new_master_data)
-scaled_new_master_labels <- new_master[order2]%>%filter(countGames >= 30)
+combined_master_data <- rbind(master_data,new_master_data)
+scaled_combined_master_data <- data.frame(scale(combined_master_data))
+scaled_master_data <- scaled_combined_master_data[1:3676,]
+scaled_new_master_data <- scaled_combined_master_data[3677:4801,]
+scaled_master_labels <- master%>%
+  filter(countGames > 30)%>%
+  select(all_of(order2))
+scaled_new_master_labels <- new_master%>%
+  filter(countGames > 30)%>%
+  select(all_of(order2))
 combined_master_labels <- rbind(scaled_master_labels, scaled_new_master_labels)
+```
+
+```{r, eval = FALSE}
+summary(master_data)
+summary(new_master_data)
 ```
 
 ```{r, eval = FALSE}
@@ -156,13 +155,12 @@ end_time - start_time
 scaled_new_predictions <- predict(scaled_m, newdata = scaled_new_master_data)
 original_pred <- c(scaled_m$classification, scaled_new_predictions$classification)
 new_pred <- scaled_m2$classification
-scaled_combined_preds <- cbind(original_pred, new_pred, combined_master_labels, scaled_combined_data)
+scaled_combined_preds <- cbind(original_pred, new_pred, combined_master_labels, scaled_combined_master_data)
 scaled_d <- purrr::map(1:9, ~ scaled_combined_preds%>%select_if(is.numeric) %>% filter(original_pred == {{.x}}))
 cbind(scaled_new_predictions$classification, scaled_new_master_data)%>%
   group_by(scaled_new_predictions$classification)%>%
   count()
 ```
-
 
 ```{r}
 scaled_combined_preds <- scaled_combined_preds%>%
@@ -366,5 +364,10 @@ reduced_new_preds%>%
   summarize(count = n())
 ```
 
+```{r}
+p1
+p2
+p3
+```
 
 
