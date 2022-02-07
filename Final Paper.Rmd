@@ -3,67 +3,217 @@ title: "Final Paper"
 author: "Noah Edwards-Thro"
 date: "1/23/2022"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 # Schedule
 
-1/24 - Methods of Sloan Paper
-1/31 - New Methods 
-2/7 - Reproducability Graphic 
-2/14 - Results Copied from Sloan Paper
-2/21 - New Results
-2/28 - Clean Up Visuals
-3/14 - Discussion Part 1
-3/21 - Open Week
-3/28 - Introduction/Final Edits Part 1
-4/4 - Final Edits Part 2
+1/24 - Methods of Sloan Paper 1/31 - New Methods 2/7 - Reproducability
+Graphic 2/14 - Results Copied from Sloan Paper 2/21 - New Results 2/28 -
+Clean Up Visuals 3/14 - Discussion Part 1 3/21 - Open Week 3/28 -
+Introduction/Final Edits Part 1 4/4 - Final Edits Part 2
 
-# 2. Methods 
+# 2. Methods
 
-To recreate the Sloan model as close as possible, I endeavored to use as close to the same data and methods that Kalman and Bosch used as I could.
+To recreate the Sloan model as close as possible, I endeavored to use as
+close to the same data and methods that Kalman and Bosch used as I
+could.
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(scifigure)
+exps <- init_experiments(nexp = 3, exp_names = c("Kalman and Bosch", "Replication", "Expansion"), stage_names = c("population", "question", "hypothesis", "data", "analyst", "code", "estimate", "claim"))
+exps[c("population", "analyst", "code", "estimate"),2] <- "different"
+exps[c("population","hypothesis","data","analyst","code", "estimate", "claim"),3] <- "different"
+sci_figure(exps, stage_names = c("Population", "Question", "Hypothesis", "Variables", "Analyst", "Code", "Results", "Claim"))
+```
 
 ## 2.1 Reproduction of Sloan Paper
 
 ### 2.1.1 Data
 
-Kalman and Bosch manually scraped 10 years (ranging from the 2009-2018 seasons) of player statistics covering advanced aggregation statistics, per possession statistics, and shot distribution statistics. Their data consisted of 5512 observations with 73 variables where each observation was a single season of a single player (if a player played all ten seasons during this range, he would show up 10 times). 
+Kalman and Bosch manually scraped 10 years (ranging from the 2009-2018
+seasons) of player statistics covering advanced aggregation statistics,
+per possession statistics, and shot distribution statistics. Their data
+consisted of 5512 observations with 73 variables where each observation
+was a single season of a single player (if a player played all ten
+seasons during this range, he would show up 10 times).
 
-While I desired to stay as close to the process that Kalman and Bosch used as possible, I had knowledge of a package in R called nbastatr that pulled data directly from Sports Reference LLC (the same website that Kalman and Bosch manually scraped their data from). In an effort to get more experience working with this package, I decided to pull the data from this package using the `bref_player_stats` function. Additionally, the shot distribution statistics were unable to download via the nbastatr package so I manually scraped them from Sports Reference LLC. Finally, I used the `player_profiles` function in the nbastatr package to download the heights (in inches) for all of the players. 
+While I desired to stay as close to the process that Kalman and Bosch
+used as possible, I had knowledge of a package in R called nbastatr that
+pulled data directly from Sports Reference LLC (the same website that
+Kalman and Bosch manually scraped their data from). In an effort to get
+more experience working with this package, I decided to pull the data
+from this package using the `bref_player_stats` function. Additionally,
+the shot distribution statistics were unable to download via the
+nbastatr package so I manually scraped them from Sports Reference LLC.
+Finally, I used the `player_profiles` function in the nbastatr package
+to download the heights (in inches) for all of the players.
 
-My data consisted of 4760 observations and 136 variables. Through some exploration, I found that the discrepancy in observations has to do with players who are traded. In my dataset, any player who is traded mid-season will still only show up as one row, with that players' team being "TOT" (signaling that the player played for multiple teams). Looking at the data on the Sports Reference LLC website, it seems that Kalman and Bosch likely had a separate row for each team that a player played on in a single season (so if a player played games for three separate teams, he would have three separte rows for that season in Kalman and Bosch's data while he would only have 1 row in mine). 
 
-In Kalman and Bosch's analysis, they filtered the data so that only observations with more than 30 games in a season are counted, ending with 3,608 observations. After using the same filter, I ended with 3,676 observations, likely due to the difference in data format with traded players (a traded player who plays 20 games for two different teams doesn't show up in their analysis but will show up as playing 40 games in mine). 
+My data consisted of `r nrow(exps)` observations and `r ncol(exps)` variables. Through some
+exploration, I found that the discrepancy in observations has to do with
+players who are traded. In my dataset, any player who is traded
+mid-season will still only show up as one row, with that players' team
+being "TOT" (signaling that the player played for multiple teams).
+Looking at the data on the Sports Reference LLC website, it seems that
+Kalman and Bosch likely had a separate row for each team that a player
+played on in a single season (so if a player played games for three
+separate teams, he would have three separte rows for that season in
+Kalman and Bosch's data while he would only have 1 row in mine).
+
+In Kalman and Bosch's analysis, they filtered the data so that only
+observations with more than 30 games in a season are counted, ending
+with 3,608 observations. After using the same filter, I ended with 3,676
+observations, likely due to the difference in data format with traded
+players (a traded player who plays 20 games for two different teams
+doesn't show up in their analysis but will show up as playing 40 games
+in mine).
 
 ### 2.1.2 Variable Selection
 
-I used the same variables that Kalman and Bosch used in their model. The variables were a combination of offensive, defensive, and aggregate statistics and all statistics were calculated as rates except for player height. The drawback of these rate statistics is that they does not take into account how much a player is on the court. For instance, a player who plays 10 minutes a night could have the same rate statistics as a player who plays 35 minutes a night, but we would consider these players very different in their abilities (largely due to the 35 minute player being able to play efficiently for 35 minutes). 
+I used the same variables that Kalman and Bosch used in their model (with the exception of using per 36 minute statistics instead of per 100 possession statistics for points and field goal attempts). The
+variables were a combination of offensive, defensive, and aggregate
+statistics and all statistics were calculated as rates except for player
+height. The drawback of these rate statistics is that they does not take
+into account how much a player is on the court. For instance, a player
+who plays 10 minutes a night could have the same rate statistics as a
+player who plays 35 minutes a night, but we would consider these players
+very different in their abilities (largely due to the 35 minute player
+being able to play efficiently for 35 minutes).
+
++----------------+-------------------------------------------------+
+| **Variable**   | **Description**                                 |
++================+=================================================+
+| Height         | Player height, in inches                        |
++----------------+-------------------------------------------------+
+| Offensive      | \% of available offensive rebounds a player     |
+| Rebound Rate   | gets while on the floor                         |
++----------------+-------------------------------------------------+
+| Defensive      | \% of available defensive rebounds a player     |
+| Rebound Rate   | gets while on the floor                         |
++----------------+-------------------------------------------------+
+| Assist Rate    | \% of teammate field goals that a player        |
+|                | assisted while on the floor                     |
++----------------+-------------------------------------------------+
+| Steal Rate     | \% of opponent possessions that end with a      |
+|                | steal b the player while on the floor           |
++----------------+-------------------------------------------------+
+| Block Rate     | \% of opponent field goal attempted blocked by  |
+|                | the player while on the floor                   |
++----------------+-------------------------------------------------+
+| Turnover Rate  | Turnovers committed per 100 offensive           |
+|                | possessions                                     |
++----------------+-------------------------------------------------+
+| Points         | Points scored per 100 offensive possessions     |
++----------------+-------------------------------------------------+
+| Usage Rate     | \% of offensive team possessions used by the    |
+|                | player while on the floor                       |
++----------------+-------------------------------------------------+
+| Player         | Per-minute production standardized such that    |
+| Efficiency     | the league average is 15                        |
+| Rating         |                                                 |
++----------------+-------------------------------------------------+
+| Free Throw     | Number of free throws made per field goals      |
+| Rate           | attempted                                       |
++----------------+-------------------------------------------------+
+| Free Throw     | Number of free throws made per free throw       |
+| Percentage     | attempt                                         |
++----------------+-------------------------------------------------+
+| Field Goals    | Number of field goals attempted per 100         |
+| Attempted      | possessions                                     |
++----------------+-------------------------------------------------+
+| 2FG%           | Number of two-point field goals made per        |
+|                | attempt                                         |
++----------------+-------------------------------------------------+
+| 3FG%           | Number of three-point field goals made per      |
+|                | attempt                                         |
++----------------+-------------------------------------------------+
+| 2FG Assist     | \% of two-point field goals that are assisted   |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| 3FGA%          | \% of field goal attempts that are three-point  |
+|                | attempts                                        |
++----------------+-------------------------------------------------+
+| Corner 3FGA%   | \% of three point-field goal attempts that are  |
+|                | from the corner                                 |
++----------------+-------------------------------------------------+
+| 3FG Assist     | \% of three-point field goals that are assisted |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| Dunk Attempt   | \% of all field goal attempts that are dunks    |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| 0-3 ft FGA%    | \% of all field goal attempts between zero and  |
+|                | three feet from the basket                      |
++----------------+-------------------------------------------------+
+| 3-10 ft FGA%   | \% of all field goal attempts between three and |
+|                | ten feet from the basket                        |
++----------------+-------------------------------------------------+
+| 10ft-3p FGA%   | \% of all field goal attempts between ten feet  |
+|                | from the basket and the three-point line        |
++----------------+-------------------------------------------------+
+
+: Recreation from Kalman and Bosch
 
 ### 2.1.3 Gaussian Mixture Clustering
 
-After attempting K-means clustering and being unsatisfied with the results, Kalman and Bosch pivoted to model-based clustering to cluster the players in their dataset. Model based clustering, specifically finite Gaussian mixture modeling, uses an expectation-maximization (EM) algorithm to fit observations into clusters. An advantage of model-based clustering is that it assigns "soft clusters", showing the probability that each observation will be in each cluster. The figure below (INSERT FIGURE), displays a graphical representation as to the clustering distributions produced by Gaussian mixture modeling. 
+After attempting K-means clustering and being unsatisfied with the
+results, Kalman and Bosch pivoted to model-based clustering to cluster
+the players in their dataset. Model based clustering, specifically
+finite Gaussian mixture modeling, uses an expectation-maximization (EM)
+algorithm to fit observations into clusters. An advantage of model-based
+clustering is that it assigns "soft clusters", showing the probability
+that each observation will be in each cluster. The figure below (INSERT
+FIGURE), displays a graphical representation as to the clustering
+distributions produced by Gaussian mixture modeling.
 
-As done by Kalman and Bosch, I used the "mclust" package in R to implement the Gaussian mixture clustering. 
+As done by Kalman and Bosch, I used the "mclust" package in R to
+implement the Gaussian mixture clustering.
 
 ## 2.2 Expansion of Sloan Paper
 
 ### 2.2.1 Data Expansion
 
-While Kalman and Bosch's original paper only used data from the 2009-2018 seasons, I wanted to see what predictions the model would make on more recent seasons (2019-2021 seasons) given the great degree to which the NBA has changed over the past half decade alone. As before, I used the `nbastatr` package to download the majority of the data and I still had to manually scrape the shooting statistics necessary. 
+While Kalman and Bosch's original paper only used data from the
+2009-2018 seasons, I wanted to see what predictions the model would make
+on more recent seasons (2019-2021 seasons) given the great degree to
+which the NBA has changed over the past half decade alone. As before, I
+used the `nbastatr` package to download the majority of the data and I
+still had to manually scrape the shooting statistics necessary.
 
-My three new seasons of data consisted of 1600 observations and 136 variables. To keep in line in the original analysis, I filtered the data to players with greater than 30 games, resulting in 1125 observations remaining. 
+My three new seasons of data consisted of 1600 observations and 136
+variables. To keep in line in the original analysis, I filtered the data
+to players with greater than 30 games, resulting in 1125 observations
+remaining.
 
 ### 2.2.2 Variable Reduction
 
-With the new seasons of data, I first wanted to see what the predictions looked like from the previous model. I used the same 23 variables and ran the initial model on the new dataset. 
+With the new seasons of data, I first wanted to see what the predictions
+looked like from the previous model. I used the same 23 variables and
+ran the initial model on the new dataset.
 
-Following this, I decided to change the input variables to the model and reduce the number of clusters that it output. I believed that for the most part, steal and block rates were mostly random and not necessarily indicative of position (or had overlapping value with other variables - e.g. height and block rates both being a strong predictor for traditional center). I also cut out the PER variable as I believed that it overlapped with other variables. Furthermore, while Kalman and Bosch used solely rate statistics in their analysis, I sought to investigate how game time (in minutes per game - MPG) could influence the model and player predictions. In addition to adding this MPG variable to the model, I combined some of the shooting variables into single variables (10-16 and 16-3P became Midrange) in an effort to reduce the number of input variables.
+Following this, I decided to change the input variables to the model and
+reduce the number of clusters that it output. I believed that for the
+most part, steal and block rates were mostly random and not necessarily
+indicative of position (or had overlapping value with other variables -
+e.g. height and block rates both being a strong predictor for
+traditional center). I also cut out the PER variable as I believed that
+it overlapped with other variables. Furthermore, while Kalman and Bosch
+used solely rate statistics in their analysis, I sought to investigate
+how game time (in minutes per game - MPG) could influence the model and
+player predictions. In addition to adding this MPG variable to the
+model, I combined some of the shooting variables into single variables
+(10-16 and 16-3P became Midrange) in an effort to reduce the number of
+input variables.
 
 ### 2.2.3 Cluster Reduction
 
-Kalman and Bosch never outlined in their paper why they chose 9 clusters as the optimal number, but I hypothesized that a slight reduction in clusters (to 6 or 7) would make more intuitive sense. 
-
+Kalman and Bosch never outlined in their paper why they chose 9 clusters
+as the optimal number, but I hypothesized that a slight reduction in
+clusters (to 6 or 7) would make more intuitive sense.
