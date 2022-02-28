@@ -25,4 +25,4 @@ There is an RDAs folder that is used to either bring in some figures or
 to bring in to the Final Report RMD some of the intermediate data that
 is not raw but also not fully cleaned.
 
-The final paper can be found in the Final Paper pdf.
+The final paper can be found in the [Final Paper pdf](https://github.com/nedwardsthro/Thesis_Work/blob/main/Final-Paper.pdf).
