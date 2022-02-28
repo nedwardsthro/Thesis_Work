@@ -1,0 +1,481 @@
+season,conference,bb_ref_team_name,team_long,team_short,playoffs,wins,losses,win_pct,points_scored_per_game,points_allowed_per_game
+2020,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,41,31,0.569,113.7,111.4
+2020,East,Boston Celtics,Boston Celtics,BOS,Yes,36,36,0.5,112.6,111.2
+2020,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,48,24,0.667,118.6,114.1
+2020,East,Charlotte Hornets,Charlotte Hornets,CHA,No,33,39,0.458,109.5,111.4
+2020,East,Chicago Bulls,Chicago Bulls,CHI,No,31,41,0.431,110.7,111.6
+2020,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,22,50,0.306,103.8,112.3
+2020,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,42,30,0.583,112.4,110.2
+2020,West,Denver Nuggets,Denver Nuggets,DEN,Yes,47,25,0.653,115.1,110.1
+2020,East,Detroit Pistons,Detroit Pistons,DET,No,20,52,0.278,106.6,111.1
+2020,West,Golden State Warriors,Golden State Warriors,GSW,No,39,33,0.542,113.7,112.7
+2020,West,Houston Rockets,Houston Rockets,HOU,No,17,55,0.236,108.8,116.7
+2020,East,Indiana Pacers,Indiana Pacers,IND,No,34,38,0.472,115.3,115.3
+2020,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,47,25,0.653,114,107.8
+2020,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,42,30,0.583,109.5,106.8
+2020,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,38,34,0.528,113.3,112.3
+2020,East,Miami Heat,Miami Heat,MIA,Yes,40,32,0.556,108.1,108
+2020,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,46,26,0.639,120.1,114.2
+2020,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,23,49,0.319,112.1,117.7
+2020,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,31,41,0.431,114.6,114.9
+2020,East,New York Knicks,New York Knicks,NYK,Yes,41,31,0.569,107,104.7
+2020,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,No,22,50,0.306,105,115.6
+2020,East,Orlando Magic,Orlando Magic,ORL,No,21,51,0.292,104,113.3
+2020,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,49,23,0.681,113.6,108.1
+2020,West,Phoenix Suns,Phoenix Suns,PHX,Yes,51,21,0.708,115.3,109.5
+2020,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,42,30,0.583,116.1,114.3
+2020,West,Sacramento Kings,Sacramento Kings,SAC,No,31,41,0.431,113.7,117.4
+2020,West,San Antonio Spurs,San Antonio Spurs,SAS,No,33,39,0.458,111.1,112.8
+2020,East,Toronto Raptors,Toronto Raptors,TOR,No,27,45,0.375,111.3,111.7
+2020,West,Utah Jazz,Utah Jazz,UTA,Yes,52,20,0.722,116.4,107.2
+2020,East,Washington Wizards,Washington Wizards,WAS,Yes,34,38,0.472,116.6,118.5
+2019,East,Atlanta Hawks,Atlanta Hawks,ATL,No,20,47,0.299,111.8,119.7
+2019,East,Boston Celtics,Boston Celtics,BOS,Yes,48,24,0.667,113.7,107.3
+2019,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,35,37,0.486,111.8,112.3
+2019,East,Charlotte Hornets,Charlotte Hornets,CHA,No,23,42,0.354,102.9,109.6
+2019,East,Chicago Bulls,Chicago Bulls,CHI,No,22,43,0.338,106.8,109.9
+2019,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,19,46,0.292,106.9,114.8
+2019,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,43,32,0.573,117,112.1
+2019,West,Denver Nuggets,Denver Nuggets,DEN,Yes,46,27,0.63,111.3,109.2
+2019,East,Detroit Pistons,Detroit Pistons,DET,No,20,46,0.303,107.2,110.8
+2019,West,Golden State Warriors,Golden State Warriors,GSW,No,15,50,0.231,106.3,115
+2019,West,Houston Rockets,Houston Rockets,HOU,Yes,44,28,0.611,117.8,114.8
+2019,East,Indiana Pacers,Indiana Pacers,IND,Yes,45,28,0.616,109.4,107.5
+2019,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,49,23,0.681,116.3,109.9
+2019,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,52,19,0.732,113.4,107.6
+2019,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,34,39,0.466,112.6,113.7
+2019,East,Miami Heat,Miami Heat,MIA,Yes,44,29,0.603,112,109.1
+2019,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,56,17,0.767,118.7,108.6
+2019,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,19,45,0.297,113.3,117.5
+2019,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,30,42,0.417,115.8,117.1
+2019,East,New York Knicks,New York Knicks,NYK,No,21,45,0.318,105.8,112.3
+2019,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,44,28,0.611,110.4,108.4
+2019,East,Orlando Magic,Orlando Magic,ORL,Yes,33,40,0.452,107.3,108.3
+2019,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,43,30,0.589,110.7,108.4
+2019,West,Phoenix Suns,Phoenix Suns,PHX,No,34,39,0.466,113.6,113.4
+2019,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,35,39,0.473,115,116.1
+2019,West,Sacramento Kings,Sacramento Kings,SAC,No,31,41,0.431,110.1,112.1
+2019,West,San Antonio Spurs,San Antonio Spurs,SAS,No,32,39,0.451,114.1,115.2
+2019,East,Toronto Raptors,Toronto Raptors,TOR,Yes,53,19,0.736,112.8,106.5
+2019,West,Utah Jazz,Utah Jazz,UTA,Yes,44,28,0.611,111.3,108.8
+2019,East,Washington Wizards,Washington Wizards,WAS,No,25,47,0.347,114.4,119.1
+2018,East,Atlanta Hawks,Atlanta Hawks,ATL,No,29,53,0.354,113.3,119.4
+2018,East,Boston Celtics,Boston Celtics,BOS,Yes,49,33,0.598,112.4,108
+2018,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,42,40,0.512,112.2,112.3
+2018,East,Charlotte Hornets,Charlotte Hornets,CHA,No,39,43,0.476,110.7,111.8
+2018,East,Chicago Bulls,Chicago Bulls,CHI,No,22,60,0.268,104.9,113.4
+2018,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,19,63,0.232,104.5,114.1
+2018,West,Dallas Mavericks,Dallas Mavericks,DAL,No,33,49,0.402,108.9,110.1
+2018,West,Denver Nuggets,Denver Nuggets,DEN,Yes,54,28,0.659,110.7,106.7
+2018,East,Detroit Pistons,Detroit Pistons,DET,Yes,41,41,0.5,107,107.3
+2018,West,Golden State Warriors,Golden State Warriors,GSW,Yes,57,25,0.695,117.7,111.2
+2018,West,Houston Rockets,Houston Rockets,HOU,Yes,53,29,0.646,113.9,109.1
+2018,East,Indiana Pacers,Indiana Pacers,IND,Yes,48,34,0.585,108,104.7
+2018,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,48,34,0.585,115.1,114.3
+2018,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,37,45,0.451,111.8,113.5
+2018,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,33,49,0.402,103.5,106.1
+2018,East,Miami Heat,Miami Heat,MIA,No,39,43,0.476,105.7,105.9
+2018,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,60,22,0.732,118.1,109.3
+2018,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,36,46,0.439,112.5,114
+2018,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,33,49,0.402,115.4,116.8
+2018,East,New York Knicks,New York Knicks,NYK,No,17,65,0.207,104.6,113.8
+2018,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,49,33,0.598,114.5,111.1
+2018,East,Orlando Magic,Orlando Magic,ORL,Yes,42,40,0.512,107.3,106.6
+2018,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,51,31,0.622,115.2,112.5
+2018,West,Phoenix Suns,Phoenix Suns,PHX,No,19,63,0.232,107.5,116.8
+2018,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,53,29,0.646,114.7,110.5
+2018,West,Sacramento Kings,Sacramento Kings,SAC,No,39,43,0.476,114.2,115.3
+2018,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,48,34,0.585,111.7,110
+2018,East,Toronto Raptors,Toronto Raptors,TOR,Yes,58,24,0.707,114.4,108.4
+2018,West,Utah Jazz,Utah Jazz,UTA,Yes,50,32,0.61,111.7,106.5
+2018,East,Washington Wizards,Washington Wizards,WAS,No,32,50,0.39,114,116.9
+2017,East,Atlanta Hawks,Atlanta Hawks,ATL,No,24,58,0.293,103.4,108.8
+2017,East,Boston Celtics,Boston Celtics,BOS,Yes,55,27,0.671,104,100.4
+2017,East,Brooklyn Nets,Brooklyn Nets,BKN,No,28,54,0.341,106.6,110.3
+2017,East,Charlotte Hornets,Charlotte Hornets,CHA,No,36,46,0.439,108.2,108
+2017,East,Chicago Bulls,Chicago Bulls,CHI,No,27,55,0.329,102.9,110
+2017,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,50,32,0.61,110.9,109.9
+2017,West,Dallas Mavericks,Dallas Mavericks,DAL,No,24,58,0.293,102.3,105.4
+2017,West,Denver Nuggets,Denver Nuggets,DEN,No,46,36,0.561,110,108.5
+2017,East,Detroit Pistons,Detroit Pistons,DET,No,39,43,0.476,103.8,103.9
+2017,West,Golden State Warriors,Golden State Warriors,GSW,Yes,58,24,0.707,113.5,107.5
+2017,West,Houston Rockets,Houston Rockets,HOU,Yes,65,17,0.793,112.4,103.9
+2017,East,Indiana Pacers,Indiana Pacers,IND,Yes,48,34,0.585,105.6,104.2
+2017,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,42,40,0.512,109,109
+2017,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,35,47,0.427,108.1,109.6
+2017,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,22,60,0.268,99.3,105.5
+2017,East,Miami Heat,Miami Heat,MIA,Yes,44,38,0.537,103.4,102.9
+2017,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,44,38,0.537,106.5,106.8
+2017,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,Yes,47,35,0.573,109.5,107.3
+2017,West,New Orleans Pelicans,New Orleans Pelicans,NOP,Yes,48,34,0.585,111.7,110.4
+2017,East,New York Knicks,New York Knicks,NYK,No,29,53,0.354,104.5,108
+2017,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,48,34,0.585,107.9,104.4
+2017,East,Orlando Magic,Orlando Magic,ORL,No,25,57,0.305,103.4,108.2
+2017,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,52,30,0.634,109.8,105.3
+2017,West,Phoenix Suns,Phoenix Suns,PHX,No,21,61,0.256,103.9,113.3
+2017,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,49,33,0.598,105.6,103
+2017,West,Sacramento Kings,Sacramento Kings,SAC,No,27,55,0.329,98.8,105.8
+2017,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,47,35,0.573,102.7,99.8
+2017,East,Toronto Raptors,Toronto Raptors,TOR,Yes,59,23,0.72,111.7,103.9
+2017,West,Utah Jazz,Utah Jazz,UTA,Yes,48,34,0.585,104.1,99.8
+2017,East,Washington Wizards,Washington Wizards,WAS,Yes,43,39,0.524,106.6,106
+2016,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,43,39,0.524,103.2,104
+2016,East,Boston Celtics,Boston Celtics,BOS,Yes,53,29,0.646,108,105.4
+2016,East,Brooklyn Nets,Brooklyn Nets,BKN,No,20,62,0.244,105.8,112.5
+2016,East,Charlotte Hornets,Charlotte Hornets,CHA,No,36,46,0.439,104.9,104.7
+2016,East,Chicago Bulls,Chicago Bulls,CHI,Yes,41,41,0.5,102.9,102.4
+2016,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,51,31,0.622,110.3,107.2
+2016,West,Dallas Mavericks,Dallas Mavericks,DAL,No,33,49,0.402,97.9,100.8
+2016,West,Denver Nuggets,Denver Nuggets,DEN,No,40,42,0.488,111.7,111.2
+2016,East,Detroit Pistons,Detroit Pistons,DET,No,37,45,0.451,101.3,102.5
+2016,West,Golden State Warriors,Golden State Warriors,GSW,Yes,67,15,0.817,115.9,104.3
+2016,West,Houston Rockets,Houston Rockets,HOU,Yes,55,27,0.671,115.3,109.6
+2016,East,Indiana Pacers,Indiana Pacers,IND,Yes,42,40,0.512,105.1,105.3
+2016,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,51,31,0.622,108.7,104.4
+2016,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,26,56,0.317,104.6,111.5
+2016,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,43,39,0.524,100.5,100
+2016,East,Miami Heat,Miami Heat,MIA,No,41,41,0.5,103.2,102.1
+2016,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,42,40,0.512,103.6,103.8
+2016,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,31,51,0.378,105.6,106.7
+2016,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,34,48,0.415,104.3,106.4
+2016,East,New York Knicks,New York Knicks,NYK,No,31,51,0.378,104.3,108
+2016,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,47,35,0.573,106.6,105.8
+2016,East,Orlando Magic,Orlando Magic,ORL,No,29,53,0.354,101.1,107.6
+2016,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,28,54,0.341,102.4,108.1
+2016,West,Phoenix Suns,Phoenix Suns,PHX,No,24,58,0.293,107.7,113.3
+2016,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,41,41,0.5,107.9,108.5
+2016,West,Sacramento Kings,Sacramento Kings,SAC,No,32,50,0.39,102.8,106.7
+2016,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,61,21,0.744,105.3,98.1
+2016,East,Toronto Raptors,Toronto Raptors,TOR,Yes,51,31,0.622,106.9,102.6
+2016,West,Utah Jazz,Utah Jazz,UTA,Yes,51,31,0.622,100.7,96.8
+2016,East,Washington Wizards,Washington Wizards,WAS,Yes,49,33,0.598,109.2,107.4
+2015,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,48,34,0.585,102.8,99.2
+2015,East,Boston Celtics,Boston Celtics,BOS,Yes,48,34,0.585,105.7,102.5
+2015,East,Brooklyn Nets,Brooklyn Nets,BKN,No,21,61,0.256,98.6,106
+2015,East,Charlotte Hornets,Charlotte Hornets,CHA,Yes,48,34,0.585,103.4,100.7
+2015,East,Chicago Bulls,Chicago Bulls,CHI,No,42,40,0.512,101.6,103.1
+2015,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,57,25,0.695,104.3,98.3
+2015,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,42,40,0.512,102.3,102.6
+2015,West,Denver Nuggets,Denver Nuggets,DEN,No,33,49,0.402,101.9,105
+2015,East,Detroit Pistons,Detroit Pistons,DET,Yes,44,38,0.537,102,101.4
+2015,West,Golden State Warriors,Golden State Warriors,GSW,Yes,73,9,0.89,114.9,104.1
+2015,West,Houston Rockets,Houston Rockets,HOU,Yes,41,41,0.5,106.5,106.4
+2015,East,Indiana Pacers,Indiana Pacers,IND,Yes,45,37,0.549,102.2,100.5
+2015,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,53,29,0.646,104.5,100.2
+2015,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,17,65,0.207,97.3,106.9
+2015,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,42,40,0.512,99.1,101.3
+2015,East,Miami Heat,Miami Heat,MIA,Yes,48,34,0.585,100,98.4
+2015,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,33,49,0.402,99,103.2
+2015,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,29,53,0.354,102.4,106
+2015,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,30,52,0.366,102.7,106.5
+2015,East,New York Knicks,New York Knicks,NYK,No,32,50,0.39,98.4,101.1
+2015,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,55,27,0.671,110.2,102.9
+2015,East,Orlando Magic,Orlando Magic,ORL,No,35,47,0.427,102.1,103.7
+2015,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,10,72,0.122,97.4,107.6
+2015,West,Phoenix Suns,Phoenix Suns,PHX,No,23,59,0.28,100.9,107.5
+2015,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,44,38,0.537,105.1,104.3
+2015,West,Sacramento Kings,Sacramento Kings,SAC,No,33,49,0.402,106.6,109.1
+2015,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,67,15,0.817,103.5,92.9
+2015,East,Toronto Raptors,Toronto Raptors,TOR,Yes,56,26,0.683,102.7,98.2
+2015,West,Utah Jazz,Utah Jazz,UTA,No,40,42,0.488,97.7,95.9
+2015,East,Washington Wizards,Washington Wizards,WAS,No,41,41,0.5,104.1,104.6
+2014,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,60,22,0.732,102.5,97.1
+2014,East,Boston Celtics,Boston Celtics,BOS,Yes,40,42,0.488,101.4,101.2
+2014,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,38,44,0.463,98,100.9
+2014,East,Charlotte Hornets,Charlotte Hornets,CHA,No,33,49,0.402,94.2,97.3
+2014,East,Chicago Bulls,Chicago Bulls,CHI,Yes,50,32,0.61,100.8,97.8
+2014,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,53,29,0.646,103.1,98.7
+2014,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,50,32,0.61,105.2,102.3
+2014,West,Denver Nuggets,Denver Nuggets,DEN,No,30,52,0.366,101.5,105
+2014,East,Detroit Pistons,Detroit Pistons,DET,No,32,50,0.39,98.5,99.5
+2014,West,Golden State Warriors,Golden State Warriors,GSW,Yes,67,15,0.817,110,99.9
+2014,West,Houston Rockets,Houston Rockets,HOU,Yes,56,26,0.683,103.9,100.5
+2014,East,Indiana Pacers,Indiana Pacers,IND,No,38,44,0.463,97.3,97
+2014,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,56,26,0.683,106.7,100.1
+2014,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,21,61,0.256,98.5,105.3
+2014,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,55,27,0.671,98.3,95.1
+2014,East,Miami Heat,Miami Heat,MIA,No,37,45,0.451,94.7,97.3
+2014,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,41,41,0.5,97.8,97.4
+2014,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,16,66,0.195,97.8,106.5
+2014,West,New Orleans Pelicans,New Orleans Pelicans,NOP,Yes,45,37,0.549,99.4,98.6
+2014,East,New York Knicks,New York Knicks,NYK,No,17,65,0.207,91.9,101.2
+2014,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,No,45,37,0.549,104,101.8
+2014,East,Orlando Magic,Orlando Magic,ORL,No,25,57,0.305,95.7,101.4
+2014,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,18,64,0.22,92,101
+2014,West,Phoenix Suns,Phoenix Suns,PHX,No,39,43,0.476,102.4,103.3
+2014,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,51,31,0.622,102.8,98.6
+2014,West,Sacramento Kings,Sacramento Kings,SAC,No,29,53,0.354,101.3,105
+2014,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,55,27,0.671,103.2,97
+2014,East,Toronto Raptors,Toronto Raptors,TOR,Yes,49,33,0.598,104,100.9
+2014,West,Utah Jazz,Utah Jazz,UTA,No,38,44,0.463,95.1,94.9
+2014,East,Washington Wizards,Washington Wizards,WAS,Yes,46,36,0.561,98.5,97.8
+2013,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,38,44,0.463,101,101.5
+2013,East,Boston Celtics,Boston Celtics,BOS,No,25,57,0.305,96.2,100.7
+2013,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,44,38,0.537,98.5,99.5
+2013,East,Charlotte Bobcats,Charlotte Hornets,CHA,Yes,43,39,0.524,96.9,97.1
+2013,East,Chicago Bulls,Chicago Bulls,CHI,Yes,48,34,0.585,93.7,91.8
+2013,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,33,49,0.402,98.2,101.5
+2013,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,49,33,0.598,104.8,102.4
+2013,West,Denver Nuggets,Denver Nuggets,DEN,No,36,46,0.439,104.4,106.5
+2013,East,Detroit Pistons,Detroit Pistons,DET,No,29,53,0.354,101,104.7
+2013,West,Golden State Warriors,Golden State Warriors,GSW,Yes,51,31,0.622,104.3,99.5
+2013,West,Houston Rockets,Houston Rockets,HOU,Yes,54,28,0.659,107.7,103.1
+2013,East,Indiana Pacers,Indiana Pacers,IND,Yes,56,26,0.683,96.7,92.3
+2013,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,57,25,0.695,107.9,101
+2013,West,Los Angeles Lakers,Los Angeles Lakers,LAL,No,27,55,0.329,103,109.2
+2013,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,50,32,0.61,96.1,94.6
+2013,East,Miami Heat,Miami Heat,MIA,Yes,54,28,0.659,102.2,97.4
+2013,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,15,67,0.183,95.5,103.7
+2013,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,40,42,0.488,106.9,104.3
+2013,West,New Orleans Pelicans,New Orleans Pelicans,NOP,No,34,48,0.415,99.7,102.4
+2013,East,New York Knicks,New York Knicks,NYK,No,37,45,0.451,98.6,99.4
+2013,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,59,23,0.72,106.2,99.8
+2013,East,Orlando Magic,Orlando Magic,ORL,No,23,59,0.28,96.5,102
+2013,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,19,63,0.232,99.5,109.9
+2013,West,Phoenix Suns,Phoenix Suns,PHX,No,48,34,0.585,105.2,102.6
+2013,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,54,28,0.659,106.7,102.8
+2013,West,Sacramento Kings,Sacramento Kings,SAC,No,28,54,0.341,100.5,103.4
+2013,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,62,20,0.756,105.4,97.6
+2013,East,Toronto Raptors,Toronto Raptors,TOR,Yes,48,34,0.585,101.3,98
+2013,West,Utah Jazz,Utah Jazz,UTA,No,25,57,0.305,95,102.2
+2013,East,Washington Wizards,Washington Wizards,WAS,Yes,44,38,0.537,100.7,99.4
+2012,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,44,38,0.537,98,97.5
+2012,East,Boston Celtics,Boston Celtics,BOS,Yes,41,40,0.506,96.5,96.7
+2012,East,Brooklyn Nets,Brooklyn Nets,BKN,Yes,49,33,0.598,96.9,95.1
+2012,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,21,61,0.256,93.4,102.7
+2012,East,Chicago Bulls,Chicago Bulls,CHI,Yes,45,37,0.549,93.2,92.9
+2012,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,24,58,0.293,96.5,101.2
+2012,West,Dallas Mavericks,Dallas Mavericks,DAL,No,41,41,0.5,101.1,101.7
+2012,West,Denver Nuggets,Denver Nuggets,DEN,Yes,57,25,0.695,106.1,101.1
+2012,East,Detroit Pistons,Detroit Pistons,DET,No,29,53,0.354,94.9,98.8
+2012,West,Golden State Warriors,Golden State Warriors,GSW,Yes,47,35,0.573,101.2,100.3
+2012,West,Houston Rockets,Houston Rockets,HOU,Yes,45,37,0.549,106,102.5
+2012,East,Indiana Pacers,Indiana Pacers,IND,Yes,49,32,0.605,94.7,90.7
+2012,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,56,26,0.683,101.1,94.6
+2012,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,45,37,0.549,102.2,101
+2012,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,56,26,0.683,93.4,89.3
+2012,East,Miami Heat,Miami Heat,MIA,Yes,66,16,0.805,102.9,95
+2012,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,38,44,0.463,98.9,100.4
+2012,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,31,51,0.378,95.7,98.1
+2012,West,New Orleans Hornets,New Orleans Pelicans,NOP,No,27,55,0.329,94.1,97.9
+2012,East,New York Knicks,New York Knicks,NYK,Yes,54,28,0.659,100,95.7
+2012,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,60,22,0.732,105.7,96.5
+2012,East,Orlando Magic,Orlando Magic,ORL,No,20,62,0.244,94.1,101.1
+2012,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,34,48,0.415,93.2,96.5
+2012,West,Phoenix Suns,Phoenix Suns,PHX,No,25,57,0.305,95.2,101.6
+2012,West,Portland Trail Blazers,Portland Trail Blazers,POR,No,33,49,0.402,97.5,100.7
+2012,West,Sacramento Kings,Sacramento Kings,SAC,No,28,54,0.341,100.2,105.1
+2012,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,58,24,0.707,103,96.6
+2012,East,Toronto Raptors,Toronto Raptors,TOR,No,34,48,0.415,97.2,98.7
+2012,West,Utah Jazz,Utah Jazz,UTA,No,43,39,0.524,98,98.1
+2012,East,Washington Wizards,Washington Wizards,WAS,No,29,53,0.354,93.2,95.8
+2011,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,40,26,0.606,96.6,93.2
+2011,East,Boston Celtics,Boston Celtics,BOS,Yes,39,27,0.591,91.8,89.3
+2011,East,New Jersey Nets,Brooklyn Nets,BKN,No,22,44,0.333,93.1,99.1
+2011,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,7,59,0.106,87,100.9
+2011,East,Chicago Bulls,Chicago Bulls,CHI,Yes,50,16,0.758,96.3,88.2
+2011,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,21,45,0.318,93,100.2
+2011,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,36,30,0.545,95.8,94.8
+2011,West,Denver Nuggets,Denver Nuggets,DEN,Yes,38,28,0.576,104.1,101.2
+2011,East,Detroit Pistons,Detroit Pistons,DET,No,25,41,0.379,90.9,95.7
+2011,West,Golden State Warriors,Golden State Warriors,GSW,No,23,43,0.348,97.8,101.2
+2011,West,Houston Rockets,Houston Rockets,HOU,No,34,32,0.515,98.1,97.9
+2011,East,Indiana Pacers,Indiana Pacers,IND,Yes,42,24,0.636,97.7,94.4
+2011,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,40,26,0.606,97.5,95
+2011,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,41,25,0.621,97.3,95.9
+2011,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,41,25,0.621,95,93
+2011,East,Miami Heat,Miami Heat,MIA,Yes,46,20,0.697,98.5,92.5
+2011,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,31,35,0.47,99,98.7
+2011,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,26,40,0.394,97.9,100.1
+2011,West,New Orleans Hornets,New Orleans Pelicans,NOP,No,21,45,0.318,89.6,93.4
+2011,East,New York Knicks,New York Knicks,NYK,Yes,36,30,0.545,97.8,94.7
+2011,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,47,19,0.712,103.1,96.9
+2011,East,Orlando Magic,Orlando Magic,ORL,Yes,37,29,0.561,94.2,93.4
+2011,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,35,31,0.53,93.6,89.4
+2011,West,Phoenix Suns,Phoenix Suns,PHX,No,33,33,0.5,98.4,98.6
+2011,West,Portland Trail Blazers,Portland Trail Blazers,POR,No,28,38,0.424,97.2,97.8
+2011,West,Sacramento Kings,Sacramento Kings,SAC,No,22,44,0.333,98.8,104.4
+2011,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,50,16,0.758,103.7,96.5
+2011,East,Toronto Raptors,Toronto Raptors,TOR,No,23,43,0.348,90.7,94
+2011,West,Utah Jazz,Utah Jazz,UTA,Yes,36,30,0.545,99.7,99
+2011,East,Washington Wizards,Washington Wizards,WAS,No,20,46,0.303,93.6,98.4
+2010,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,44,38,0.537,95,95.8
+2010,East,Boston Celtics,Boston Celtics,BOS,Yes,56,26,0.683,96.5,91.1
+2010,East,New Jersey Nets,Brooklyn Nets,BKN,No,24,58,0.293,94.2,100.4
+2010,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,34,48,0.415,93.3,97.3
+2010,East,Chicago Bulls,Chicago Bulls,CHI,Yes,62,20,0.756,98.6,91.3
+2010,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,No,19,63,0.232,95.5,104.5
+2010,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,57,25,0.695,100.2,96
+2010,West,Denver Nuggets,Denver Nuggets,DEN,Yes,50,32,0.61,107.5,102.7
+2010,East,Detroit Pistons,Detroit Pistons,DET,No,30,52,0.366,97,100.6
+2010,West,Golden State Warriors,Golden State Warriors,GSW,No,36,46,0.439,103.4,105.7
+2010,West,Houston Rockets,Houston Rockets,HOU,No,43,39,0.524,105.9,103.7
+2010,East,Indiana Pacers,Indiana Pacers,IND,Yes,37,45,0.451,99.8,100.9
+2010,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,32,50,0.39,98.6,101.8
+2010,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,57,25,0.695,101.5,95.4
+2010,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,46,36,0.561,99.9,97.6
+2010,East,Miami Heat,Miami Heat,MIA,Yes,58,24,0.707,102.1,94.6
+2010,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,35,47,0.427,91.9,92.7
+2010,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,17,65,0.207,101.1,107.7
+2010,West,New Orleans Hornets,New Orleans Pelicans,NOP,Yes,46,36,0.561,94.9,94
+2010,East,New York Knicks,New York Knicks,NYK,Yes,42,40,0.512,106.5,105.7
+2010,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,55,27,0.671,104.8,101
+2010,East,Orlando Magic,Orlando Magic,ORL,Yes,52,30,0.634,99.2,93.7
+2010,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,41,41,0.5,99,97.5
+2010,West,Phoenix Suns,Phoenix Suns,PHX,No,40,42,0.488,105,105.9
+2010,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,48,34,0.585,96.3,94.8
+2010,West,Sacramento Kings,Sacramento Kings,SAC,No,24,58,0.293,99.4,104.7
+2010,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,61,21,0.744,103.7,98
+2010,East,Toronto Raptors,Toronto Raptors,TOR,No,22,60,0.268,99.1,105.4
+2010,West,Utah Jazz,Utah Jazz,UTA,No,39,43,0.476,99.4,101.3
+2010,East,Washington Wizards,Washington Wizards,WAS,No,23,59,0.28,97.3,104.7
+2009,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,53,29,0.646,101.7,97
+2009,East,Boston Celtics,Boston Celtics,BOS,Yes,50,32,0.61,99.2,95.6
+2009,East,New Jersey Nets,Brooklyn Nets,BKN,No,12,70,0.146,92.4,101.5
+2009,East,Charlotte Bobcats,Charlotte Hornets,CHA,Yes,44,38,0.537,95.3,93.8
+2009,East,Chicago Bulls,Chicago Bulls,CHI,Yes,41,41,0.5,97.5,99.1
+2009,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,61,21,0.744,102.1,95.6
+2009,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,55,27,0.671,102,99.3
+2009,West,Denver Nuggets,Denver Nuggets,DEN,Yes,53,29,0.646,106.5,102.4
+2009,East,Detroit Pistons,Detroit Pistons,DET,No,27,55,0.329,94,99.1
+2009,West,Golden State Warriors,Golden State Warriors,GSW,No,26,56,0.317,108.8,112.4
+2009,West,Houston Rockets,Houston Rockets,HOU,No,42,40,0.512,102.4,102.7
+2009,East,Indiana Pacers,Indiana Pacers,IND,No,32,50,0.39,100.8,103.8
+2009,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,29,53,0.354,95.7,102.1
+2009,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,57,25,0.695,101.7,97
+2009,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,40,42,0.488,102.5,104
+2009,East,Miami Heat,Miami Heat,MIA,Yes,47,35,0.573,96.5,94.2
+2009,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,46,36,0.561,97.7,96
+2009,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,15,67,0.183,98.2,107.8
+2009,West,New Orleans Hornets,New Orleans Pelicans,NOP,No,37,45,0.451,100.2,102.7
+2009,East,New York Knicks,New York Knicks,NYK,No,29,53,0.354,102.1,105.9
+2009,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,Yes,50,32,0.61,101.5,98
+2009,East,Orlando Magic,Orlando Magic,ORL,Yes,59,23,0.72,102.8,95.3
+2009,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,27,55,0.329,97.7,101.6
+2009,West,Phoenix Suns,Phoenix Suns,PHX,Yes,54,28,0.659,110.2,105.3
+2009,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,50,32,0.61,98.1,94.8
+2009,West,Sacramento Kings,Sacramento Kings,SAC,No,25,57,0.305,100,104.4
+2009,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,50,32,0.61,101.4,96.3
+2009,East,Toronto Raptors,Toronto Raptors,TOR,No,40,42,0.488,104.1,105.9
+2009,West,Utah Jazz,Utah Jazz,UTA,Yes,53,29,0.646,104.2,98.9
+2009,East,Washington Wizards,Washington Wizards,WAS,No,26,56,0.317,96.2,101
+2008,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,47,35,0.573,98.1,96.5
+2008,East,Boston Celtics,Boston Celtics,BOS,Yes,62,20,0.756,100.9,93.4
+2008,East,New Jersey Nets,Brooklyn Nets,BKN,No,34,48,0.415,98.1,100.5
+2008,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,35,47,0.427,93.6,94.9
+2008,East,Chicago Bulls,Chicago Bulls,CHI,Yes,41,41,0.5,102.2,102.5
+2008,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,66,16,0.805,100.3,91.4
+2008,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,50,32,0.61,101.7,99.8
+2008,West,Denver Nuggets,Denver Nuggets,DEN,Yes,54,28,0.659,104.3,100.9
+2008,East,Detroit Pistons,Detroit Pistons,DET,Yes,39,43,0.476,94.2,94.7
+2008,West,Golden State Warriors,Golden State Warriors,GSW,No,29,53,0.354,108.6,112.3
+2008,West,Houston Rockets,Houston Rockets,HOU,Yes,53,29,0.646,98.4,94.4
+2008,East,Indiana Pacers,Indiana Pacers,IND,No,36,46,0.439,105.1,106.2
+2008,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,19,63,0.232,95.1,103.9
+2008,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,65,17,0.793,106.9,99.3
+2008,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,24,58,0.293,93.9,99.3
+2008,East,Miami Heat,Miami Heat,MIA,Yes,43,39,0.524,98.3,98
+2008,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,34,48,0.415,99.3,100.4
+2008,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,24,58,0.293,97.8,102.7
+2008,West,New Orleans Hornets,New Orleans Pelicans,NOP,Yes,49,33,0.598,95.8,94.3
+2008,East,New York Knicks,New York Knicks,NYK,No,32,50,0.39,105.2,107.8
+2008,West,Oklahoma City Thunder,Oklahoma City Thunder,OKC,No,23,59,0.28,97,103.1
+2008,East,Orlando Magic,Orlando Magic,ORL,Yes,59,23,0.72,101,94.4
+2008,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,41,41,0.5,97.4,97.3
+2008,West,Phoenix Suns,Phoenix Suns,PHX,No,46,36,0.561,109.4,107.5
+2008,West,Portland Trail Blazers,Portland Trail Blazers,POR,Yes,54,28,0.659,99.4,94.1
+2008,West,Sacramento Kings,Sacramento Kings,SAC,No,17,65,0.207,100.6,109.3
+2008,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,54,28,0.659,97,93.3
+2008,East,Toronto Raptors,Toronto Raptors,TOR,No,33,49,0.402,99,101.9
+2008,West,Utah Jazz,Utah Jazz,UTA,Yes,48,34,0.585,103.6,100.9
+2008,East,Washington Wizards,Washington Wizards,WAS,No,19,63,0.232,96.1,103.5
+2007,East,Atlanta Hawks,Atlanta Hawks,ATL,Yes,37,45,0.451,98.2,100
+2007,East,Boston Celtics,Boston Celtics,BOS,Yes,66,16,0.805,100.5,90.3
+2007,East,New Jersey Nets,Brooklyn Nets,BKN,No,34,48,0.415,95.8,100.9
+2007,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,32,50,0.39,97.1,101.4
+2007,East,Chicago Bulls,Chicago Bulls,CHI,No,33,49,0.402,97.3,100.4
+2007,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,45,37,0.549,96.4,96.7
+2007,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,51,31,0.622,100.4,95.9
+2007,West,Denver Nuggets,Denver Nuggets,DEN,Yes,50,32,0.61,110.7,107
+2007,East,Detroit Pistons,Detroit Pistons,DET,Yes,59,23,0.72,97.5,90.1
+2007,West,Golden State Warriors,Golden State Warriors,GSW,No,48,34,0.585,111,108.8
+2007,West,Houston Rockets,Houston Rockets,HOU,Yes,55,27,0.671,96.7,92
+2007,East,Indiana Pacers,Indiana Pacers,IND,No,36,46,0.439,104,105.4
+2007,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,23,59,0.28,93.8,101.1
+2007,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,57,25,0.695,108.6,101.3
+2007,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,22,60,0.268,100.7,106.9
+2007,East,Miami Heat,Miami Heat,MIA,No,15,67,0.183,91.4,100
+2007,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,26,56,0.317,97,103.9
+2007,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,22,60,0.268,95.6,102.4
+2007,West,New Orleans Hornets,New Orleans Pelicans,NOP,Yes,56,26,0.683,100.9,95.6
+2007,East,New York Knicks,New York Knicks,NYK,No,23,59,0.28,96.9,103.5
+2007,West,Seattle SuperSonics,Oklahoma City Thunder,OKC,No,20,62,0.244,97.5,106.3
+2007,East,Orlando Magic,Orlando Magic,ORL,Yes,52,30,0.634,104.5,99
+2007,East,Philadelphia 76ers,Philadelphia 76ers,PHI,Yes,40,42,0.488,96.6,96.2
+2007,West,Phoenix Suns,Phoenix Suns,PHX,Yes,55,27,0.671,110.1,105
+2007,West,Portland Trail Blazers,Portland Trail Blazers,POR,No,41,41,0.5,95.4,96.3
+2007,West,Sacramento Kings,Sacramento Kings,SAC,No,38,44,0.463,102.5,104.8
+2007,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,56,26,0.683,95.4,90.6
+2007,East,Toronto Raptors,Toronto Raptors,TOR,Yes,41,41,0.5,100.2,97.3
+2007,West,Utah Jazz,Utah Jazz,UTA,Yes,54,28,0.659,106.2,99.3
+2007,East,Washington Wizards,Washington Wizards,WAS,Yes,43,39,0.524,98.8,99.2
+2006,East,Atlanta Hawks,Atlanta Hawks,ATL,No,30,52,0.366,93.7,98.4
+2006,East,Boston Celtics,Boston Celtics,BOS,No,24,58,0.293,95.8,99.2
+2006,East,New Jersey Nets,Brooklyn Nets,BKN,Yes,41,41,0.5,97.6,98.3
+2006,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,33,49,0.402,96.9,100.6
+2006,East,Chicago Bulls,Chicago Bulls,CHI,Yes,49,33,0.598,98.8,93.8
+2006,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,50,32,0.61,96.8,92.9
+2006,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,67,15,0.817,100,92.8
+2006,West,Denver Nuggets,Denver Nuggets,DEN,Yes,45,37,0.549,105.4,103.7
+2006,East,Detroit Pistons,Detroit Pistons,DET,Yes,53,29,0.646,96,91.8
+2006,West,Golden State Warriors,Golden State Warriors,GSW,Yes,42,40,0.512,106.5,106.9
+2006,West,Houston Rockets,Houston Rockets,HOU,Yes,52,30,0.634,97,92.1
+2006,East,Indiana Pacers,Indiana Pacers,IND,No,35,47,0.427,95.6,98
+2006,West,Los Angeles Clippers,Los Angeles Clippers,LAC,No,40,42,0.488,95.6,96.1
+2006,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,42,40,0.512,103.3,103.4
+2006,West,Memphis Grizzlies,Memphis Grizzlies,MEM,No,22,60,0.268,101.6,106.7
+2006,East,Miami Heat,Miami Heat,MIA,Yes,44,38,0.537,94.6,95.5
+2006,East,Milwaukee Bucks,Milwaukee Bucks,MIL,No,28,54,0.341,99.7,104
+2006,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,32,50,0.39,96.1,99.7
+2006,West,New Orleans/Oklahoma City Hornets,New Orleans Pelicans,NOP,No,39,43,0.476,95.5,97.1
+2006,East,New York Knicks,New York Knicks,NYK,No,33,49,0.402,97.5,100.3
+2006,West,Seattle SuperSonics,Oklahoma City Thunder,OKC,No,31,51,0.378,99.1,102
+2006,East,Orlando Magic,Orlando Magic,ORL,Yes,40,42,0.488,94.8,94
+2006,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,35,47,0.427,94.9,98
+2006,West,Phoenix Suns,Phoenix Suns,PHX,Yes,61,21,0.744,110.2,102.9
+2006,West,Portland Trail Blazers,Portland Trail Blazers,POR,No,32,50,0.39,94.1,98.4
+2006,West,Sacramento Kings,Sacramento Kings,SAC,No,33,49,0.402,101.3,103.1
+2006,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,58,24,0.707,98.5,90.1
+2006,East,Toronto Raptors,Toronto Raptors,TOR,Yes,47,35,0.573,99.5,98.5
+2006,West,Utah Jazz,Utah Jazz,UTA,Yes,51,31,0.622,101.5,98.6
+2006,East,Washington Wizards,Washington Wizards,WAS,Yes,41,41,0.5,104.3,104.9
+2005,East,Atlanta Hawks,Atlanta Hawks,ATL,No,26,56,0.317,97.2,102
+2005,East,Boston Celtics,Boston Celtics,BOS,No,33,49,0.402,98,99.5
+2005,East,New Jersey Nets,Brooklyn Nets,BKN,Yes,49,33,0.598,93.8,92.4
+2005,East,Charlotte Bobcats,Charlotte Hornets,CHA,No,26,56,0.317,96.9,100.9
+2005,East,Chicago Bulls,Chicago Bulls,CHI,Yes,41,41,0.5,97.8,97.2
+2005,East,Cleveland Cavaliers,Cleveland Cavaliers,CLE,Yes,50,32,0.61,97.6,95.4
+2005,West,Dallas Mavericks,Dallas Mavericks,DAL,Yes,60,22,0.732,99.1,93.1
+2005,West,Denver Nuggets,Denver Nuggets,DEN,Yes,44,38,0.537,100.3,100.1
+2005,East,Detroit Pistons,Detroit Pistons,DET,Yes,64,18,0.78,96.8,90.2
+2005,West,Golden State Warriors,Golden State Warriors,GSW,No,34,48,0.415,98.5,99.8
+2005,West,Houston Rockets,Houston Rockets,HOU,No,34,48,0.415,90.1,91.7
+2005,East,Indiana Pacers,Indiana Pacers,IND,Yes,41,41,0.5,93.9,92
+2005,West,Los Angeles Clippers,Los Angeles Clippers,LAC,Yes,47,35,0.573,97.2,95.6
+2005,West,Los Angeles Lakers,Los Angeles Lakers,LAL,Yes,45,37,0.549,99.4,96.9
+2005,West,Memphis Grizzlies,Memphis Grizzlies,MEM,Yes,49,33,0.598,92.2,88.5
+2005,East,Miami Heat,Miami Heat,MIA,Yes,52,30,0.634,99.9,96
+2005,East,Milwaukee Bucks,Milwaukee Bucks,MIL,Yes,40,42,0.488,97.8,98.8
+2005,West,Minnesota Timberwolves,Minnesota Timberwolves,MIN,No,33,49,0.402,91.7,93.6
+2005,West,New Orleans/Oklahoma City Hornets,New Orleans Pelicans,NOP,No,38,44,0.463,92.8,95.6
+2005,East,New York Knicks,New York Knicks,NYK,No,23,59,0.28,95.6,102
+2005,West,Seattle SuperSonics,Oklahoma City Thunder,OKC,No,35,47,0.427,102.6,105.6
+2005,East,Orlando Magic,Orlando Magic,ORL,No,36,46,0.439,94.9,96
+2005,East,Philadelphia 76ers,Philadelphia 76ers,PHI,No,38,44,0.463,99.4,101.3
+2005,West,Phoenix Suns,Phoenix Suns,PHX,Yes,54,28,0.659,108.4,102.8
+2005,West,Portland Trail Blazers,Portland Trail Blazers,POR,No,21,61,0.256,88.8,98.3
+2005,West,Sacramento Kings,Sacramento Kings,SAC,Yes,44,38,0.537,98.9,97.3
+2005,West,San Antonio Spurs,San Antonio Spurs,SAS,Yes,63,19,0.768,95.6,88.8
+2005,East,Toronto Raptors,Toronto Raptors,TOR,No,27,55,0.329,101.1,104
+2005,West,Utah Jazz,Utah Jazz,UTA,No,41,41,0.5,92.4,95
+2005,East,Washington Wizards,Washington Wizards,WAS,Yes,42,40,0.512,101.7,99.8
