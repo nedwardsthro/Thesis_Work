@@ -17,7 +17,7 @@ with similar results.
 The data can be found in the Data folder, further broken down into Raw
 Data, Cleaned Data, and Predictions Folders.
 
-The code can be found in the code folder, further broken down into Data
+The code can be found in the [Code folder](https://github.com/nedwardsthro/Thesis_Work/tree/main/Code), further broken down into Data
 Scraper, Data Cleaner, Models, Predictions, Z Value Analysis, and
 Figures R files.
 
