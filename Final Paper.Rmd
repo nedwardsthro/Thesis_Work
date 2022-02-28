@@ -259,11 +259,12 @@ algorithm to fit observations into clusters. An advantage of model-based
 clustering is that it assigns "soft clusters", showing the probability
 that each observation will be in each cluster. The figure below displays
 a two-dimensional graphical representation of the clustering
-distributions produced by Gaussian mixture modeling.
+distributions produced by Gaussian mixture modeling (this figure is from an article on towardsdatascience.com).
+
 
 ![](images/Gaussian%20Mixture%20Modeling.png)
 
-As done by Kalman and Bosch, I used the "mclust" package in R to
+As done by Kalman and Bosch, I used the `mclust` package in R to
 implement the Gaussian mixture clustering.
 
 ## 2.3 Expansion of Kalman and Bosch's Paper
@@ -655,7 +656,7 @@ ggplot(data = models_1_6,
     y = "Count of Player in Reduced Cluster Model",
     title = "9 Clusters vs. 6 Clusters Model Comparison",
     subtitle = "Models Based off of Data from 2009-2018",
-    fill = "New Model"
+    fill = "Original Model"
   ) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         panel.background = element_blank())
@@ -687,6 +688,6 @@ As demonstrated earlier, a few of the clusters (such as the Traditional Center c
 
 One small result that I found that I thought was interesting was the slight growth in the Ball Dominant Scorer cluster in the past 13 seasons. Looking at the heat map in Section 3.1.4, we can see small increases in the proportion of players who are classified as Ball Dominant Scorers. It appears this trend has grown even more rapidly over the past five years. While the NBA has always been a star dominated league, the development of offenses around starcentric players such as James Harden, Luka Doncic, and Trae Young has changed the league. These starcentric offenses developed in an effort to be more efficient and I believe that over time, this trend will only continue to grow. The NBA has taken some measures to reduce the efficiency of this style of play, such as changing some of the rules relating to fouling that Harden and Young have so famously taken advantage of. Despite the NBA's effort, I believe that the league as a whole (especially as it relates to offense) will continue to gradually grow more starcentric. Further research should be done in the future to investigate this trend and potential ceilings on this trend.
 
-# Conclusion
+# 5. Conclusion
 
 
