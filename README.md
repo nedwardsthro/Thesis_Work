@@ -14,7 +14,7 @@ their clustering model performs on the most recent three years of NBA
 data and by investigating potential ways to achieve variable reduction
 with similar results.
 
-The data can be found in the Data folder, further broken down into Raw
+The data can be found in the [Data folder](https://github.com/nedwardsthro/Thesis_Work/tree/main/Data), further broken down into Raw
 Data, Cleaned Data, and Predictions Folders.
 
 The code can be found in the [Code folder](https://github.com/nedwardsthro/Thesis_Work/tree/main/Code), further broken down into Data
