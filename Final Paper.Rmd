@@ -12,7 +12,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Schedule
+# Schedule 
 
 2/28 - First Rough Draft (Minus Intro and Conclusion)
 
