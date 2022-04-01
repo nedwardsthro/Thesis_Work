@@ -160,3 +160,6 @@ write_csv(reduced_scaled_combined_data, file = "reduced_scaled_combined_data.csv
 write_csv(reduced_scaled_data, file = "reduced_scaled_data.csv")
 write_csv(reduced_scaled_new_data, file = "reduced_scaled_new_data.csv")
 
+# Analyzing Redundancy in PER
+library(Hmisc)
+redun( ~ pctORB + pctDRB + pctAST + pctTOV + ptsPerMinute + ratioPER, data = combined_master_data, r2 = 0.8) 

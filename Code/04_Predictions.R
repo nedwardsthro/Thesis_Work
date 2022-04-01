@@ -175,6 +175,22 @@ models_1_6 <- inner_join(scaled_combined_preds%>%
 save(models_1_6, file = "RDAs/models_1_6.rda")
 
 
-
-
+# Proportions for Each Cluster
+view(scaled_combined_preds)
+scaled_combined_preds%>%
+  group_by(First_Prediction)%>%
+  count()%>%
+  ungroup()%>%
+  mutate(Our_Perc = n/sum(n),
+         K_B = c(150, 
+                 439,
+                 443,
+                 210,
+                 569,
+                 525,
+                 646,
+                 425,
+                 201),
+         K_B_Perc = K_B/sum(K_B))%>%
+  select(-c(n, K_B))
 

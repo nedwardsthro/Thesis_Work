@@ -24,3 +24,11 @@ scaled_m5 <- Mclust(reduced_scaled_data, G = 6)
 # Sixth Model - Based on 13 seasons, reduced variables
 set.seed(21)
 scaled_m6 <- Mclust(reduced_scaled_combined_data, G = 6)
+
+# Seventh Model - Based on 10 Seasons, reduced variables
+set.seed(21)
+scaled_m5 <- Mclust(scaled_master_data, G = 6)
+
+# Eight Model - Based on 13 seasons, reduced variables
+set.seed(21)
+scaled_m6 <- Mclust(scaled_combined_master_data, G = 6)
