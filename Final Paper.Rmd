@@ -13,7 +13,7 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Schedule
+# Schedule 
 
 3/28 - Final Edits Part 1
 
