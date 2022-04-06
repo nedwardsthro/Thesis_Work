@@ -13,12 +13,6 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Schedule
-
-3/28 - Final Edits Part 1
-
-4/4 - Final Edits Part 2
-
 # 1. Introduction
 
 This paper is for the purpose of completing an Honors Thesis in
@@ -42,19 +36,21 @@ experimental setup with a different analyst. Essentially, given the same
 data and the analysis outline, another analyst could reproduce the same
 result. Reproduction, however, is the process of completing the analysis
 completely from scratch with a new sample, new experimental setup, etc.
-[@Plesser_2018] An example of reproduction of Kalman and Bosch's
-analysis would be to use a new population (perhaps NCAA basketball data)
-and to arrive at the same nine clusters that they arrived at.
+[@Plesser_2018] An example of a reproduction performed on the analysis
+done by @kalman_nba_2020 would be to use a new population (perhaps NCAA
+basketball data) and to arrive at the same nine clusters that they
+arrived at.
 
-Our paper is an example of a replication of the analysis that Kalman and
-Bosch performed. To replicate their analysis, we endeavored to use as
-close to the same data and methods that Kalman and Bosch used as we
-could. The graphic below illustrates in what area our replication is
-different from their analysis and in what areas it is the same. Finally,
-it shows how our expansion is different from both the original analysis
-and our replication. In the figure, black icon mean that trait of the
-analysis is the same as the original while blue traits are different
-from the original analysis.
+Our paper is an example of a replication of the analysis that
+@kalman_nba_2020 performed. To replicate their analysis, we endeavored
+to use as close to the same data and methods that @kalman_nba_2020 used
+as we could. The graphic below, created from the scifigure package
+[@Patil], illustrates in what area our replication is different from
+their analysis and in what areas it is the same. Finally, it shows how
+our expansion is different from both the original analysis and our
+replication. In the figure, black icon mean that trait of the analysis
+is the same as the original while blue traits are different from the
+original analysis.
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval = TRUE}
 library(scifigure)
@@ -114,15 +110,15 @@ consisted of 5512 observations with 73 variables where each observation
 was a single season of a single player (if a player played all ten
 seasons during this range, he would show up ten times).
 
-While we desired to stay as close to the process that Kalman and Bosch
+While we desired to stay as close to the process that @kalman_nba_2020
 used as possible, we had knowledge of a package in R called nbastatr
 [@Bresler] that pulled data directly from Sports Reference LLC (the same
-website that Kalman and Bosch manually scraped their data from). Using
+website that @kalman_nba_2020 manually scraped their data from). Using
 the `bref_player_stats` function, we decided to pull the data from this
 package because of the speed and ease the package provided compared to
 manually scraping the data. We hypothesized that using this method would
 give identical (or near identical) data to the data that was manually
-scraped by Kalman and Bosch. Additionally, the shot distribution
+scraped by @kalman_nba_2020. Additionally, the shot distribution
 statistics were unable to download via the nbastatr package so we
 manually scraped them from Sports Reference LLC. Finally, we used the
 `player_profiles` function in the nbastatr package to download the
@@ -151,22 +147,21 @@ load("RDAs/new_master.rda")
 
 Our data consisted of `r nrow(master)` observations and `r ncol(master)`
 variables. Notably, this is different than the 5512 observations seen in
-Kalman and Bosch's analysis [@kalman_nba_2020]. Through some
-exploration, we found that the `r 5512 - nrow(master)` discrepancy in
-observations has to do with players who are traded. In our data set, any
-player who is traded mid-season will still only show up as one row, with
-that players' team being "TOT" (signaling that the player played for
-multiple teams). Looking at the data on the Sports Reference LLC
-website, it seems that Kalman and Bosch likely had a separate row for
-each team that a player played on in a single season (so if a player
-played games for three separate teams, he would have three separate rows
-for that season in Kalman and Bosch's data while he would only have 1
-row in ours).
+the analysis done by @kalman_nba_2020. Through some exploration, we
+found that the `r 5512 - nrow(master)` discrepancy in observations has
+to do with players who are traded. In our data set, any player who is
+traded mid-season will still only show up as one row, with that players'
+team being "TOT" (signaling that the player played for multiple teams).
+Looking at the data on the Sports Reference LLC website, it seems that
+Kalman and Bosch likely had a separate row for each team that a player
+played on in a single season (so if a player played games for three
+separate teams, he would have three separate rows for that season in the
+data for @kalman_nba_2020 while he would only have 1 row in ours).
 
-In Kalman and Bosch's analysis, they filtered the data so that only
-observations with more than 30 games in a season are counted, ending
-with 3,608 observations [@kalman_nba_2020]. After using the same filter,
-we ended with `r nrow(scaled_master_data)` observations, leading to a
+In the analysis done by @kalman_nba_2020, they filtered the data so that
+only observations with more than 30 games in a season are counted,
+ending with 3,608 observations. After using the same filter, we ended
+with `r nrow(scaled_master_data)` observations, leading to a
 `r abs(3608 - nrow(scaled_master_data))` discrepancy between our
 analyses. This difference is again likely due to the difference in data
 format with traded players (a traded player who plays 20 games for two
@@ -187,7 +182,7 @@ them as part of the data validation process.
 
 ### 2.2.2 Variable Selection
 
-We used the same variables that Kalman and Bosch used in their model
+We used the same variables that @kalman_nba_2020 used in their model
 (with the exception of using per 36 minute statistics instead of per 100
 possession statistics for points and field goal attempts). Using per 36
 minute statistics will lead to slight differences in scale versus using
@@ -204,86 +199,81 @@ being able to play efficiently for 35 minutes). Below is a table
 displaying all of the variables included as well as a short description
 about the variable.
 
-+----------------+------------------------------------------+
-| **Variable**   | **Description**                          |
-+================+==========================================+
-| Height         | Player height, in inches                 |
-+----------------+------------------------------------------+
-| Offensive      | \% of available offensive rebounds a     |
-| Rebound Rate   | player gets while on the floor           |
-+----------------+------------------------------------------+
-| Defensive      | \% of available defensive rebounds a     |
-| Rebound Rate   | player gets while on the floor           |
-+----------------+------------------------------------------+
-| Assist Rate    | \% of teammate field goals that a player |
-|                | assisted while on the floor              |
-+----------------+------------------------------------------+
-| Steal Rate     | \% of opponent possessions that end with |
-|                | a steal b the player while on the floor  |
-+----------------+------------------------------------------+
-| Block Rate     | \% of opponent field goal attempted      |
-|                | blocked by the player while on the floor |
-+----------------+------------------------------------------+
-| Turnover Rate  | Turnovers committed per 100 offensive    |
-|                | possessions                              |
-+----------------+------------------------------------------+
-| Points         | Points scored per 100 offensive          |
-|                | possessions                              |
-+----------------+------------------------------------------+
-| Usage Rate     | \% of offensive team possessions used by |
-|                | the player while on the floor            |
-+----------------+------------------------------------------+
-| Player         | Per-minute production standardized such  |
-| Efficiency     | that the league average is 15            |
-| Rating         |                                          |
-+----------------+------------------------------------------+
-| Free Throw     | Number of free throws made per field     |
-| Rate           | goals attempted                          |
-+----------------+------------------------------------------+
-| Free Throw     | Number of free throws made per free      |
-| Percentage     | throw attempt                            |
-+----------------+------------------------------------------+
-| Field Goals    | Number of field goals attempted per 100  |
-| Attempted      | possessions                              |
-+----------------+------------------------------------------+
-| 2FG%           | Number of two-point field goals made per |
-|                | attempt                                  |
-+----------------+------------------------------------------+
-| 3FG%           | Number of three-point field goals made   |
-|                | per attempt                              |
-+----------------+------------------------------------------+
-| 2FG Assist     | \% of two-point field goals that are     |
-| Rate           | assisted                                 |
-+----------------+------------------------------------------+
-| 3FGA%          | \% of field goal attempts that are       |
-|                | three-point attempts                     |
-+----------------+------------------------------------------+
-| Corner 3FGA%   | \% of three point-field goal attempts    |
-|                | that are from the corner                 |
-+----------------+------------------------------------------+
-| 3FG Assist     | \% of three-point field goals that are   |
-| Rate           | assisted                                 |
-+----------------+------------------------------------------+
-| Dunk Attempt   | \% of all field goal attempts that are   |
-| Rate           | dunks                                    |
-+----------------+------------------------------------------+
-| 0-3 ft FGA%    | \% of all field goal attempts between    |
-|                | zero and three feet from the basket      |
-+----------------+------------------------------------------+
-| 3-10 ft FGA%   | \% of all field goal attempts between    |
-|                | three and ten feet from the basket       |
-+----------------+------------------------------------------+
-| 10ft-3p FGA%   | \% of all field goal attempts between    |
-|                | ten feet from the basket and the         |
-|                | three-point line                         |
-+----------------+------------------------------------------+
++----------------+----------------------------------------------------+
+| **Variable**   | **Description**                                    |
++================+====================================================+
+| Height         | Player height, in inches                           |
++----------------+----------------------------------------------------+
+| Offensive      | \% of available offensive rebounds a player gets   |
+| Rebound Rate   | while on the floor                                 |
++----------------+----------------------------------------------------+
+| Defensive      | \% of available defensive rebounds a player gets   |
+| Rebound Rate   | while on the floor                                 |
++----------------+----------------------------------------------------+
+| Assist Rate    | \% of teammate field goals that a player assisted  |
+|                | while on the floor                                 |
++----------------+----------------------------------------------------+
+| Steal Rate     | \% of opponent possessions that end with a steal b |
+|                | the player while on the floor                      |
++----------------+----------------------------------------------------+
+| Block Rate     | \% of opponent field goal attempted blocked by the |
+|                | player while on the floor                          |
++----------------+----------------------------------------------------+
+| Turnover Rate  | Turnovers committed per 100 offensive possessions  |
++----------------+----------------------------------------------------+
+| Points         | Points scored per 100 offensive possessions        |
++----------------+----------------------------------------------------+
+| Usage Rate     | \% of offensive team possessions used by the       |
+|                | player while on the floor                          |
++----------------+----------------------------------------------------+
+| Player         | Per-minute production standardized such that the   |
+| Efficiency     | league average is 15                               |
+| Rating         |                                                    |
++----------------+----------------------------------------------------+
+| Free Throw     | Number of free throws made per field goals         |
+| Rate           | attempted                                          |
++----------------+----------------------------------------------------+
+| Free Throw     | Number of free throws made per free throw attempt  |
+| Percentage     |                                                    |
++----------------+----------------------------------------------------+
+| Field Goals    | Number of field goals attempted per 100            |
+| Attempted      | possessions                                        |
++----------------+----------------------------------------------------+
+| 2FG%           | Number of two-point field goals made per attempt   |
++----------------+----------------------------------------------------+
+| 3FG%           | Number of three-point field goals made per attempt |
++----------------+----------------------------------------------------+
+| 2FG Assist     | \% of two-point field goals that are assisted      |
+| Rate           |                                                    |
++----------------+----------------------------------------------------+
+| 3FGA%          | \% of field goal attempts that are three-point     |
+|                | attempts                                           |
++----------------+----------------------------------------------------+
+| Corner 3FGA%   | \% of three point-field goal attempts that are     |
+|                | from the corner                                    |
++----------------+----------------------------------------------------+
+| 3FG Assist     | \% of three-point field goals that are assisted    |
+| Rate           |                                                    |
++----------------+----------------------------------------------------+
+| Dunk Attempt   | \% of all field goal attempts that are dunks       |
+| Rate           |                                                    |
++----------------+----------------------------------------------------+
+| 0-3 ft FGA%    | \% of all field goal attempts between zero and     |
+|                | three feet from the basket                         |
++----------------+----------------------------------------------------+
+| 3-10 ft FGA%   | \% of all field goal attempts between three and    |
+|                | ten feet from the basket                           |
++----------------+----------------------------------------------------+
+| 10ft-3p FGA%   | \% of all field goal attempts between ten feet     |
+|                | from the basket and the three-point line           |
++----------------+----------------------------------------------------+
 
 : Recreation of Table 1 from Kalman and Bosch [@kalman_nba_2020]
 
 ### 2.2.3 Gaussian Mixture Clustering
 
 After attempting K-means clustering and being unsatisfied with the
-results, Kalman and Bosch pivoted to model-based clustering to cluster
+results, @kalman_nba_2020 pivoted to model-based clustering to cluster
 the players in their data set. Model based clustering, specifically
 finite Gaussian mixture modeling, uses an expectation-maximization (EM)
 algorithm to fit observations into clusters. Each distribution (cluster)
@@ -305,8 +295,8 @@ in R to implement the Gaussian mixture clustering.
 
 ### 2.3.1 Data Expansion
 
-While Kalman and Bosch's original paper only used data from the
-2009-2018 seasons, we wanted to see what predictions the model would
+While the original paper done by @kalman_nba_2020 only used data from
+the 2009-2018 seasons, we wanted to see what predictions the model would
 make on more recent seasons (2019-2021 seasons) given the great degree
 to which the NBA has changed over the past half decade alone. As before,
 we used the `nbastatr` package to download the majority of the data and
@@ -364,7 +354,7 @@ FT and 3-10 FT into a single variable.
 
 ### 2.3.3 Cluster Reduction
 
-Kalman and Bosch never outlined in their paper why they chose 9 clusters
+@kalman_nba_2020 never outlined in their paper why they chose 9 clusters
 as the optimal number, but we hypothesized that a slight reduction in
 clusters (to 6) would make more intuitive sense. We believed that some
 clusters would be better grouped together. For instance, we hypothesized
@@ -385,16 +375,16 @@ variable set as well.
 To analyze our clustering methods, we looked at a few different
 features. To start, we looked at the proportion of players in each
 cluster based on the original ten seasons and the new three seasons. We
-wanted to see how this proportion matched with that of Kalman and
-Bosch's analysis. Following this, we took a deep dive into each cluster
-to make sure that our cluster characteristics matched that of Kalman and
-Bosch. While Kalman and Bosch showed the Three Point Shooting Cluster in
-their analysis, we opted to show the Traditional Center cluster to give
-readers a view of a different cluster. Following this, we investigated
-if the the clustering method could accurately capture the evolution of
-individual teams and the league as a whole. Next we analyzed cluster
-consistency between our model with only ten seasons and our model with
-all 13 seasons.
+wanted to see how this proportion matched with that of the analysis done
+by @kalman_nba_2020. Following this, we took a deep dive into each
+cluster to make sure that our cluster characteristics matched that of
+@kalman_nba_2020 . While @kalman_nba_2020 showed the Three Point
+Shooting Cluster in their analysis, we opted to show the Traditional
+Center cluster to give readers a view of a different cluster. Following
+this, we investigated if the the clustering method could accurately
+capture the evolution of individual teams and the league as a whole.
+Next we analyzed cluster consistency between our model with only ten
+seasons and our model with all 13 seasons.
 
 Next, in our expansion of Kalman and Bosch's analysis, we looked at how
 the proportion of players in each cluster in the original model compared
@@ -410,7 +400,7 @@ in the new six cluster model.
 
 ### 3.1.1 Cluster Breakdowns
 
-In their analysis, Kalman and Bosch found 9 clusters and assigned them
+In their analysis, @kalman_nba_2020 found 9 clusters and assigned them
 labels based on player types within those clusters. Our initial
 reproduction of their model had clusters that matched theirs, though the
 proportions for each cluster were different than their proportions by an
@@ -458,7 +448,7 @@ ggplot(proportion_comparison, aes(x = First_Prediction, y = value, fill = variab
 
 In our analysis, Three Point Shooting Guard was the highest cluster, and
 while it would have been the second highest cluster with just the
-seasons that Kalman and Bosch used, the three new seasons that we added
+seasons that @kalman_nba_2020 used, the three new seasons that we added
 had an over 5% higher proportion of players clustered into the Three
 Point Shooting Guard cluster. Meanwhile, the Traditional Center cluster
 had the highest proportion of players in the original ten seasons but
@@ -590,7 +580,7 @@ percent of the players remained in the same cluster.
 
 ### 3.2.1 Variable Reduction
 
-While working with the data from the Kalman and Bosch analysis, we
+While working with the data from the @kalman_nba_2020 analysis, we
 hypothesized that the data could achieve similar clustering outcomes
 using a smaller number of variables. We hypothesized this because we
 believed that some variables were either marginally relative to the
@@ -680,129 +670,119 @@ Dominant Scorer, Traditional Center, and Versatile Role Player. The
 table below outlines each of the clusters and the strengths and
 weaknesses that characterize each cluster.
 
-+-------------+-------------+-------------+-------------+
-| Cluster     | Description | High Stats  | Low Stats   |
-+=============+=============+=============+=============+
-| Skilled Big | A big who   | Def Reb. %  | 3P FGA      |
-|             | does plays  |             |             |
-|             | both inside | 2P FG %     |             |
-|             | and outside |             |             |
-|             | of the      |             |             |
-|             | paint. Has  |             |             |
-|             | a higher    |             |             |
-|             | usage and   |             |             |
-|             | scores more |             |             |
-|             | than the    |             |             |
-|             | Traditional |             |             |
-|             | Center. Has |             |             |
-|             | a very high |             |             |
-|             | 2 point     |             |             |
-|             | Field Goal  |             |             |
-|             | %.          |             |             |
-+-------------+-------------+-------------+-------------+
-| Co          | Secondary   | Assist Rate | Off. Reb %  |
-| mplimentary | creator to  |             |             |
-| Guard       | the High    | 3P FG%      | Height      |
-|             | Usage       |             |             |
-|             | Scorer. Has |             |             |
-|             | the highest |             |             |
-|             | assist rate |             |             |
-|             | among the   |             |             |
-|             | clusters    |             |             |
-|             | and a       |             |             |
-|             | strong 3    |             |             |
-|             | point       |             |             |
-|             | shooting    |             |             |
-|             | percentage, |             |             |
-|             | though this |             |             |
-|             | cluster     |             |             |
-|             | doesn't     |             |             |
-|             | take many   |             |             |
-|             | 3s. Weak in |             |             |
-|             | height and  |             |             |
-|             | defensive   |             |             |
-|             | rebounding. |             |             |
-+-------------+-------------+-------------+-------------+
-| Three Point | A guard or  | 3P FG%      | Off. Reb %  |
-| Shooter     | wing who    |             |             |
-|             | takes a lot | 3P FGA      | FT Rate     |
-|             | of 3's and  |             |             |
-|             | is highly   |             |             |
-|             | efficient   |             |             |
-|             | from 3. Has |             |             |
-|             | a very low  |             |             |
-|             | FT rate and |             |             |
-|             | does not    |             |             |
-|             | crash the   |             |             |
-|             | offensive   |             |             |
-|             | glass.      |             |             |
-+-------------+-------------+-------------+-------------+
-| Ball        | A high      | FGA (10     | \% of FGA   |
-| Dominant    | usage       | FT-3P)      | from 3      |
-| Scorer      | player,     |             |             |
-|             | typically a | Point Per   |             |
-|             | guard or    | Minute      |             |
-|             | wing, who   |             |             |
-|             | is          |             |             |
-|             | proficient  |             |             |
-|             | at scoring  |             |             |
-|             | and         |             |             |
-|             | creating    |             |             |
-|             | for others. |             |             |
-|             | Does not    |             |             |
-|             | crash the   |             |             |
-|             | offensive   |             |             |
-|             | glass and   |             |             |
-|             | shoots a    |             |             |
-|             | smaller     |             |             |
-|             | proportion  |             |             |
-|             | of their    |             |             |
-|             | shots from  |             |             |
-|             | 3 as        |             |             |
-|             | compared to |             |             |
-|             | other       |             |             |
-|             | players.    |             |             |
-+-------------+-------------+-------------+-------------+
-| Traditional | Interior    | Off. Reb %  | 3p FG%      |
-| Center      | post center |             |             |
-|             | who shoots  | FT Rate     | Assist Rate |
-|             | almost      |             |             |
-|             | exclusively |             |             |
-|             | inside ten  |             |             |
-|             | feet. High  |             |             |
-|             | offensive   |             |             |
-|             | rebounding  |             |             |
-|             | rate and FT |             |             |
-|             | rate. Does  |             |             |
-|             | not have a  |             |             |
-|             | very high   |             |             |
-|             | assist      |             |             |
-|             | rate.       |             |             |
-+-------------+-------------+-------------+-------------+
-| Versatile   | Group of    | Assist Rate | Off. Reb %  |
-| Role Player | players who |             |             |
-|             | act as      | Usage Rate  | FGA (0-10   |
-|             | chameleons  |             | FT)         |
-|             | on the      |             |             |
-|             | court and   |             |             |
-|             | can do      |             |             |
-|             | whatever is |             |             |
-|             | needed by   |             |             |
-|             | their team. |             |             |
-|             | Often serve |             |             |
-|             | as          |             |             |
-|             | connectors  |             |             |
-|             | on the      |             |             |
-|             | team,       |             |             |
-|             | though they |             |             |
-|             | have lower  |             |             |
-|             | assist      |             |             |
-|             | rates than  |             |             |
-|             | the C       |             |             |
-|             | o           |             |             |
-|             | mplimentary |             |             |
-|             | Guard.      |             |             |
-+-------------+-------------+-------------+-------------+
++--------------+--------------+--------------+--------------+
+| Cluster      | Description  | High Stats   | Low Stats    |
++==============+==============+==============+==============+
+| Skilled Big  | A big who    | Def Reb. %   | 3P FGA       |
+|              | does plays   |              |              |
+|              | both inside  | 2P FG %      |              |
+|              | and outside  |              |              |
+|              | of the       |              |              |
+|              | paint. Has a |              |              |
+|              | higher usage |              |              |
+|              | and scores   |              |              |
+|              | more than    |              |              |
+|              | the          |              |              |
+|              | Traditional  |              |              |
+|              | Center. Has  |              |              |
+|              | a very high  |              |              |
+|              | 2 point      |              |              |
+|              | Field Goal   |              |              |
+|              | %.           |              |              |
++--------------+--------------+--------------+--------------+
+| Co           | Secondary    | Assist Rate  | Off. Reb %   |
+| mplimentary  | creator to   |              |              |
+| Guard        | the High     | 3P FG%       | Height       |
+|              | Usage        |              |              |
+|              | Scorer. Has  |              |              |
+|              | the highest  |              |              |
+|              | assist rate  |              |              |
+|              | among the    |              |              |
+|              | clusters and |              |              |
+|              | a strong 3   |              |              |
+|              | point        |              |              |
+|              | shooting     |              |              |
+|              | percentage,  |              |              |
+|              | though this  |              |              |
+|              | cluster      |              |              |
+|              | doesn't take |              |              |
+|              | many 3s.     |              |              |
+|              | Weak in      |              |              |
+|              | height and   |              |              |
+|              | defensive    |              |              |
+|              | rebounding.  |              |              |
++--------------+--------------+--------------+--------------+
+| Three Point  | A guard or   | 3P FG%       | Off. Reb %   |
+| Shooter      | wing who     |              |              |
+|              | takes a lot  | 3P FGA       | FT Rate      |
+|              | of 3's and   |              |              |
+|              | is highly    |              |              |
+|              | efficient    |              |              |
+|              | from 3. Has  |              |              |
+|              | a very low   |              |              |
+|              | FT rate and  |              |              |
+|              | does not     |              |              |
+|              | crash the    |              |              |
+|              | offensive    |              |              |
+|              | glass.       |              |              |
++--------------+--------------+--------------+--------------+
+| Ball         | A high usage | FGA (10      | \% of FGA    |
+| Dominant     | player,      | FT-3P)       | from 3       |
+| Scorer       | typically a  |              |              |
+|              | guard or     | Point Per    |              |
+|              | wing, who is | Minute       |              |
+|              | proficient   |              |              |
+|              | at scoring   |              |              |
+|              | and creating |              |              |
+|              | for others.  |              |              |
+|              | Does not     |              |              |
+|              | crash the    |              |              |
+|              | offensive    |              |              |
+|              | glass and    |              |              |
+|              | shoots a     |              |              |
+|              | smaller      |              |              |
+|              | proportion   |              |              |
+|              | of their     |              |              |
+|              | shots from 3 |              |              |
+|              | as compared  |              |              |
+|              | to other     |              |              |
+|              | players.     |              |              |
++--------------+--------------+--------------+--------------+
+| Traditional  | Interior     | Off. Reb %   | 3p FG%       |
+| Center       | post center  |              |              |
+|              | who shoots   | FT Rate      | Assist Rate  |
+|              | almost       |              |              |
+|              | exclusively  |              |              |
+|              | inside ten   |              |              |
+|              | feet. High   |              |              |
+|              | offensive    |              |              |
+|              | rebounding   |              |              |
+|              | rate and FT  |              |              |
+|              | rate. Does   |              |              |
+|              | not have a   |              |              |
+|              | very high    |              |              |
+|              | assist rate. |              |              |
++--------------+--------------+--------------+--------------+
+| Versatile    | Group of     | Assist Rate  | Off. Reb %   |
+| Role Player  | players who  |              |              |
+|              | act as       | Usage Rate   | FGA (0-10    |
+|              | chameleons   |              | FT)          |
+|              | on the court |              |              |
+|              | and can do   |              |              |
+|              | whatever is  |              |              |
+|              | needed by    |              |              |
+|              | their team.  |              |              |
+|              | Often serve  |              |              |
+|              | as           |              |              |
+|              | connectors   |              |              |
+|              | on the team, |              |              |
+|              | though they  |              |              |
+|              | have lower   |              |              |
+|              | assist rates |              |              |
+|              | than the C o |              |              |
+|              | mplimentary  |              |              |
+|              | Guard.       |              |              |
++--------------+--------------+--------------+--------------+
 
 The figure below shows how players from the original nine clusters fit
 into the six cluster model. The Ball Dominant Scorer cluster retained
@@ -888,7 +868,7 @@ listed in another cluster.
 One of the most important things that we saw through our analysis was
 how the input data impacted the model. For each of the three sets of
 models, we created one model based on the original ten seasons of data
-that Kalman and Bosch used and a second model based on 13 seasons worth
+that @kalman_nba_2020 used and a second model based on 13 seasons worth
 of data. We believe that one of the reasons that the cluster consistency
 was not very high for any of the three pairs of models is that the new
 three seasons worth of data are significantly different than the
@@ -943,13 +923,13 @@ ceilings on this trend.
 
 # 5. Conclusion
 
-We concur with Kalman and Bosch that NBA players can be clustered
+We concur with @kalman_nba_2020 that NBA players can be clustered
 according to stylistic tendencies and efficiency. NBA players fit into
 more than just the traditional five positions. While we hypothesized
 that NBA players were better clustered into 6 clusters, we found that
-they are better clustered into the original nine clusters that Kalman
-and Bosch used. However, as the NBA continues to evolve, we believe that
-a reduction in clusters would be optimal.
+they are better clustered into the original nine clusters that
+@kalman_nba_2020 used. However, as the NBA continues to evolve, we
+believe that a reduction in clusters would be optimal.
 
 Further work on NBA player clustering should be done using particular
 player skills and not just rate and aggregate statistics. Sports Info
@@ -963,5 +943,9 @@ Using these new clusters, the casual NBA fan can better understand the
 game and how players compare to each other. NBA front offices can use
 these clustering techniques to better compare players and identify which
 players are over or undervalued. We hope that our paper furthers the
-work begun by Kalman and Bosch and that others will expand on our work
+work begun by @kalman_nba_2020 and that others will expand on our work
 in the future as more granular data becomes available.
+
+\newpage
+
+# References
