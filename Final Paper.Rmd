@@ -33,7 +33,7 @@ and cluster reduction with similar results.
 One important topic in statistics is the difference between reproduction
 and replication. Replication is the process of performing the same
 experimental setup with a different analyst. Essentially, given the same
-data and the analysis outline, another analyst could reproduce the same
+data and the analysis outline, another analyst could achieve the same
 result. Reproduction, however, is the process of completing the analysis
 completely from scratch with a new sample, new experimental setup, etc.
 [@Plesser_2018] An example of a reproduction performed on the analysis
@@ -48,9 +48,15 @@ as we could. The graphic below, created from the scifigure package
 [@Patil], illustrates in what area our replication is different from
 their analysis and in what areas it is the same. Finally, it shows how
 our expansion is different from both the original analysis and our
-replication. In the figure, black icon mean that trait of the analysis
-is the same as the original while blue traits are different from the
-original analysis.
+replication. In some ways, our expansion is an example of a reproduction
+because while we used some data that overlaps, we also pulled data from
+more recent seasons as well, creating a new sample, albeit from the same
+population (NBA players). However, since our expansion will hypothesize
+a different claim and will have a different result, it would not
+classify as a full reproduction of @kalman_nba_2020. In the figure,
+black icons mean that trait of the analysis is the same as the original
+([@kalman_nba_2020]) while blue traits are different from the original
+analysis.
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval = TRUE}
 library(scifigure)
@@ -103,7 +109,7 @@ sci_figure(
 
 ### 2.2.1 Data
 
-Kalman and Bosch manually scraped ten years (ranging from the 2009-2018
+@kalman_nba_2020 manually scraped ten years (ranging from the 2009-2018
 seasons) of player statistics covering advanced aggregation statistics,
 per possession statistics, and shot distribution statistics. Their data
 consisted of 5512 observations with 73 variables where each observation
@@ -123,7 +129,7 @@ statistics were unable to download via the nbastatr package so we
 manually scraped them from Sports Reference LLC. Finally, we used the
 `player_profiles` function in the nbastatr package to download the
 heights (in inches) for all of the players before using the mutate-joins
-functions in the dplyr [@Wickham]package to combine the data.
+functions in the dplyr [@Wickham] package to combine the data.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 # Library
@@ -185,9 +191,10 @@ them as part of the data validation process.
 We used the same variables that @kalman_nba_2020 used in their model
 (with the exception of using per 36 minute statistics instead of per 100
 possession statistics for points and field goal attempts). Using per 36
-minute statistics will lead to slight differences in scale versus using
-per 100 possession statistics but the important thing is that both are
-rate statistics.\
+minute statistics will lead to slight differences in scale compared to
+using per 100 possession statistics as was done by @kalman_nba_2020,
+however both are rate statistics, so the discrepancy will likely not
+have a large impact on the final results.\
 The variables were a combination of offensive, defensive, and aggregate
 statistics and all statistics were calculated as rates except for player
 height. The drawback of these rate statistics is that they does not take
@@ -199,76 +206,79 @@ being able to play efficiently for 35 minutes). Below is a table
 displaying all of the variables included as well as a short description
 about the variable.
 
-+----------------+----------------------------------------------------+
-| **Variable**   | **Description**                                    |
-+================+====================================================+
-| Height         | Player height, in inches                           |
-+----------------+----------------------------------------------------+
-| Offensive      | \% of available offensive rebounds a player gets   |
-| Rebound Rate   | while on the floor                                 |
-+----------------+----------------------------------------------------+
-| Defensive      | \% of available defensive rebounds a player gets   |
-| Rebound Rate   | while on the floor                                 |
-+----------------+----------------------------------------------------+
-| Assist Rate    | \% of teammate field goals that a player assisted  |
-|                | while on the floor                                 |
-+----------------+----------------------------------------------------+
-| Steal Rate     | \% of opponent possessions that end with a steal b |
-|                | the player while on the floor                      |
-+----------------+----------------------------------------------------+
-| Block Rate     | \% of opponent field goal attempted blocked by the |
-|                | player while on the floor                          |
-+----------------+----------------------------------------------------+
-| Turnover Rate  | Turnovers committed per 100 offensive possessions  |
-+----------------+----------------------------------------------------+
-| Points         | Points scored per 100 offensive possessions        |
-+----------------+----------------------------------------------------+
-| Usage Rate     | \% of offensive team possessions used by the       |
-|                | player while on the floor                          |
-+----------------+----------------------------------------------------+
-| Player         | Per-minute production standardized such that the   |
-| Efficiency     | league average is 15                               |
-| Rating         |                                                    |
-+----------------+----------------------------------------------------+
-| Free Throw     | Number of free throws made per field goals         |
-| Rate           | attempted                                          |
-+----------------+----------------------------------------------------+
-| Free Throw     | Number of free throws made per free throw attempt  |
-| Percentage     |                                                    |
-+----------------+----------------------------------------------------+
-| Field Goals    | Number of field goals attempted per 100            |
-| Attempted      | possessions                                        |
-+----------------+----------------------------------------------------+
-| 2FG%           | Number of two-point field goals made per attempt   |
-+----------------+----------------------------------------------------+
-| 3FG%           | Number of three-point field goals made per attempt |
-+----------------+----------------------------------------------------+
-| 2FG Assist     | \% of two-point field goals that are assisted      |
-| Rate           |                                                    |
-+----------------+----------------------------------------------------+
-| 3FGA%          | \% of field goal attempts that are three-point     |
-|                | attempts                                           |
-+----------------+----------------------------------------------------+
-| Corner 3FGA%   | \% of three point-field goal attempts that are     |
-|                | from the corner                                    |
-+----------------+----------------------------------------------------+
-| 3FG Assist     | \% of three-point field goals that are assisted    |
-| Rate           |                                                    |
-+----------------+----------------------------------------------------+
-| Dunk Attempt   | \% of all field goal attempts that are dunks       |
-| Rate           |                                                    |
-+----------------+----------------------------------------------------+
-| 0-3 ft FGA%    | \% of all field goal attempts between zero and     |
-|                | three feet from the basket                         |
-+----------------+----------------------------------------------------+
-| 3-10 ft FGA%   | \% of all field goal attempts between three and    |
-|                | ten feet from the basket                           |
-+----------------+----------------------------------------------------+
-| 10ft-3p FGA%   | \% of all field goal attempts between ten feet     |
-|                | from the basket and the three-point line           |
-+----------------+----------------------------------------------------+
++----------------+-------------------------------------------------+
+| **Variable**   | **Description**                                 |
++================+=================================================+
+| Height         | Player height, in inches                        |
++----------------+-------------------------------------------------+
+| Offensive      | \% of available offensive rebounds a player     |
+| Rebound Rate   | gets while on the floor                         |
++----------------+-------------------------------------------------+
+| Defensive      | \% of available defensive rebounds a player     |
+| Rebound Rate   | gets while on the floor                         |
++----------------+-------------------------------------------------+
+| Assist Rate    | \% of teammate field goals that a player        |
+|                | assisted while on the floor                     |
++----------------+-------------------------------------------------+
+| Steal Rate     | \% of opponent possessions that end with a      |
+|                | steal b the player while on the floor           |
++----------------+-------------------------------------------------+
+| Block Rate     | \% of opponent field goal attempted blocked by  |
+|                | the player while on the floor                   |
++----------------+-------------------------------------------------+
+| Turnover Rate  | Turnovers committed per 100 offensive           |
+|                | possessions                                     |
++----------------+-------------------------------------------------+
+| Points         | Points scored per 100 offensive possessions     |
++----------------+-------------------------------------------------+
+| Usage Rate     | \% of offensive team possessions used by the    |
+|                | player while on the floor                       |
++----------------+-------------------------------------------------+
+| Player         | Per-minute production standardized such that    |
+| Efficiency     | the league average is 15                        |
+| Rating         |                                                 |
++----------------+-------------------------------------------------+
+| Free Throw     | Number of free throws made per field goals      |
+| Rate           | attempted                                       |
++----------------+-------------------------------------------------+
+| Free Throw     | Number of free throws made per free throw       |
+| Percentage     | attempt                                         |
++----------------+-------------------------------------------------+
+| Field Goals    | Number of field goals attempted per 100         |
+| Attempted      | possessions                                     |
++----------------+-------------------------------------------------+
+| 2FG%           | Number of two-point field goals made per        |
+|                | attempt                                         |
++----------------+-------------------------------------------------+
+| 3FG%           | Number of three-point field goals made per      |
+|                | attempt                                         |
++----------------+-------------------------------------------------+
+| 2FG Assist     | \% of two-point field goals that are assisted   |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| 3FGA%          | \% of field goal attempts that are three-point  |
+|                | attempts                                        |
++----------------+-------------------------------------------------+
+| Corner 3FGA%   | \% of three point-field goal attempts that are  |
+|                | from the corner                                 |
++----------------+-------------------------------------------------+
+| 3FG Assist     | \% of three-point field goals that are assisted |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| Dunk Attempt   | \% of all field goal attempts that are dunks    |
+| Rate           |                                                 |
++----------------+-------------------------------------------------+
+| 0-3 ft FGA%    | \% of all field goal attempts between zero and  |
+|                | three feet from the basket                      |
++----------------+-------------------------------------------------+
+| 3-10 ft FGA%   | \% of all field goal attempts between three and |
+|                | ten feet from the basket                        |
++----------------+-------------------------------------------------+
+| 10ft-3p FGA%   | \% of all field goal attempts between ten feet  |
+|                | from the basket and the three-point line        |
++----------------+-------------------------------------------------+
 
-: Recreation of Table 1 from Kalman and Bosch [@kalman_nba_2020]
+: Recreation of Table 1 from @kalman_nba_2020
 
 ### 2.2.3 Gaussian Mixture Clustering
 
@@ -279,17 +289,44 @@ finite Gaussian mixture modeling, uses an expectation-maximization (EM)
 algorithm to fit observations into clusters. Each distribution (cluster)
 has its own mean and variance [@Dobilas]. This allows for clusters to
 not just take a circular shape (in two dimensions) but rather take an
-oblong shape. An advantage of model-based clustering is that it assigns
-"soft clusters", showing the probability that each observation will be
-in each cluster [@Maklin]. The figure below [@Carrasco] displays a
-two-dimensional graphical representation of the clustering distributions
-produced by Gaussian mixture modeling. As you can see, each cluster has
-not only a different mean, but a different variance.
+oblong shape. Another advantage of model-based clustering is that it
+assigns "soft clusters", showing the probability that each observation
+will be in each cluster [@Maklin]. The figure below [@Carrasco] displays
+a two-dimensional graphical representation of the clustering
+distributions produced by Gaussian mixture modeling. As you can see,
+each cluster has not only a different mean, but a different variance.
 
-![](images/Gaussian%20Mixture%20Modeling.png)
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+set.seed(1)
+df <- tibble(
+  r = c(rnorm(10, -5, 1),
+        rnorm(10, 2, 0.5),
+        rnorm(10, 7, 3)),
+  clust = factor(rep(c(1, 2, 3), each = 10))
+)
 
-As done by Kalman and Bosch, we used the `mclust` [@fraley2006] package
-in R to implement the Gaussian mixture clustering.
+df_big <- tibble(
+  r = c(rnorm(10000, -5, 1),
+        rnorm(10000, 2, 0.5),
+        rnorm(10000, 7, 3)),
+  clust = factor(rep(c(1, 2, 3), each = 10000))
+)
+ggplot(df_big, aes(x = r, group = clust, color = clust)) +
+  geom_density() + 
+  geom_point(data = df, aes(x = r, y = 0, color = clust)) + 
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_blank()) + 
+  geom_vline(xintercept = c(-5, 2, 7), lty = 2) +
+  geom_vline(xintercept = c(-5 + 1, 2 + 0.5, 7 + 3), lty = 2)+
+  labs(title = "1-Dimensional Representation of Gaussian Mixture Modeling")
+```
+
+As done by Kalman and Bosch, we used the `mclust` [@MCLUST] package in R
+to implement the Gaussian mixture clustering.
 
 ## 2.3 Expansion of Kalman and Bosch's Paper
 
@@ -319,14 +356,14 @@ of clusters and number of variable pairings that we tried (more on that
 later), we made a pair of models (one based on the original ten seasons
 of data and one based on all 13 seasons of data). One of the reasons
 that we made a pair of models for each one is it is difficult to test
-the accuracy of a Gaussian Mixture model. There is not necessarily a
-"correct" way to cluster the observations and in many ways, having a
-good model is based on expert knowledge of the data and being satisfied
-with the results. In an effort to come up with some test metric, we
-decided to test how the clustering predictions hold for each pair from
-one model to the other (i.e. does a player classify in the same cluster
-in both models). Below is a table displaying the six models (three
-pairs) that we created.
+the accuracy of a Gaussian Mixture model in an unsupervised setting.
+There is not necessarily a "correct" way to cluster the observations and
+in many ways, having a good model is based on expert knowledge of the
+data and being satisfied with the results. In an effort to come up with
+some test metric, we decided to test how the clustering predictions hold
+for each pair from one model to the other (i.e. does a player classify
+in the same cluster in both models). Below is a table displaying the six
+models (three pairs) that we created.
 
 | Pair | Original Ten Seasons           | All 13 Seasons                 |
 |------|--------------------------------|--------------------------------|
@@ -515,22 +552,23 @@ ggplot(data = Trad_Cent_M, aes(x = variable, y = value)) +
 
 We wanted to investigate how the clustering told the story of individual
 teams' evolution over the course of the 13 year period. The figure below
-displays the a heat map of how the Warriors have gone about team
-building the past 13 years. We picked the Golden State Warriors to show
-because they historically have been averse to making mid-season trades,
-meaning that all of their players will show up as playing for their team
-and will not have a "TOT" team name in our data set. The most noticeable
+displays the a heat map of how the Golden State Warriors have gone about
+team building the past 13 years. We picked the Warriors to show because
+they historically have been averse to making mid-season trades, meaning
+that most of their players will show up as playing for their team and
+will not have a "TOT" team name in our data set. The most noticeable
 part of this figure is how the Warriors moved from Traditional Centers
-to Mid Range Bigs. While they are most recently known for their "Death
-Lineup" and three point shooting, it is not that the Warriors don't have
-big men, but rather that they have transitioned from Traditional Centers
-to Mid Range Bigs. The Andrew Bogut/Festus Ezeli pairing that marked the
-early 2010's has been replaced by the more mid range oriented Kevon
-Looney/Eric Pascall pairing. The three year period of Kevin Durant can
-also be seen by an increase in the Ball Dominant Scorer cluster.
-Finally, it is interesting to note that the Warriors have more Versatile
-Role Players than most teams with players such as Draymond Green and
-Shaun Livingston often being classified as Versatile Role Players.
+to Mid Range Bigs. While they have been more famously known for their
+"Death Lineup" and three point shooting [@Kitano], it is not that the
+Warriors don't have big men, but rather that they have transitioned from
+Traditional Centers to Mid Range Bigs. The Andrew Bogut/Festus Ezeli
+pairing that marked the early 2010's has been replaced by the more mid
+range oriented Kevon Looney/Eric Pascall pairing. The three year period
+of Kevin Durant can also be seen by an increase in the Ball Dominant
+Scorer cluster. Finally, it is interesting to note that the Warriors
+have more Versatile Role Players than most teams with players such as
+Draymond Green and Shaun Livingston often being classified as Versatile
+Role Players.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 load("RDAs/Warriors_Plot")
@@ -539,26 +577,26 @@ Warriors_Plot
 
 ### 3.1.4 League Trends
 
-One of the things that was not investigated by Kalman and Bosch (at
+One of the things that was not investigated by @kalman_nba_2020 (at
 least in their paper), was the league wide trend of shooting more threes
 and how that shows up in the clustering algorithm. We sought to
-investigate this and other potential trends could be seen through the
-use of a heat map of the clustering results across the 13 seasons worth
-of data. This heat map uses the probabilities that a player was in each
-cluster so it accounts for the 25% that a player is in one cluster even
-though they are primarily classified in a different cluster. As seen in
-the heat map below, the Traditional Center cluster had the highest
-proportion at the beginning of this time frame but gradually decreased
-as the NBA moved towards a more perimeter oriented game. At the same
-time, the Three Point Shooting Guard cluster gradually increases before
-exploding over the last five years where now over 25% of the players in
-the most recent completed season classify as a Three Point Shooting
-Guard. The transition away from a game dominated in the paint can also
-be demonstrated by slight increases in the proportions of the Stretch
-Forward, Mid Range Big, and Skilled Forward clusters. Finally, we
-thought it was particularly interesting that in the last few years, the
-Ball Dominant Scorer cluster has increased with slight declines in the
-Floor General and High Usage Guard clusters.
+investigate this and other potential trends that could be seen through
+the use of a heat map of the clustering results across the 13 seasons
+worth of data. This heat map uses the probabilities that a player was in
+each cluster so for example it accounts for the 25% that a player is in
+one cluster even though they are primarily classified in a different
+cluster. As seen in the heat map below, the Traditional Center cluster
+had the highest proportion at the beginning of this time frame but
+gradually decreased as the NBA moved towards a more perimeter oriented
+game. At the same time, the Three Point Shooting Guard cluster gradually
+increases before exploding over the last five years where now over 25%
+of the players in the most recent completed season classify as a Three
+Point Shooting Guard. The transition away from a game dominated in the
+paint can also be demonstrated by slight increases in the proportions of
+the Stretch Forward, Mid Range Big, and Skilled Forward clusters.
+Finally, we thought it was particularly interesting that in the last few
+years, the Ball Dominant Scorer cluster has increased with slight
+declines in the Floor General and High Usage Guard clusters.
 
 ```{r, echo = FALSE}
 load("RDAs/Seasons_Plot.rda")
@@ -670,119 +708,162 @@ Dominant Scorer, Traditional Center, and Versatile Role Player. The
 table below outlines each of the clusters and the strengths and
 weaknesses that characterize each cluster.
 
-+--------------+--------------+--------------+--------------+
-| Cluster      | Description  | High Stats   | Low Stats    |
-+==============+==============+==============+==============+
-| Skilled Big  | A big who    | Def Reb. %   | 3P FGA       |
-|              | does plays   |              |              |
-|              | both inside  | 2P FG %      |              |
-|              | and outside  |              |              |
-|              | of the       |              |              |
-|              | paint. Has a |              |              |
-|              | higher usage |              |              |
-|              | and scores   |              |              |
-|              | more than    |              |              |
-|              | the          |              |              |
-|              | Traditional  |              |              |
-|              | Center. Has  |              |              |
-|              | a very high  |              |              |
-|              | 2 point      |              |              |
-|              | Field Goal   |              |              |
-|              | %.           |              |              |
-+--------------+--------------+--------------+--------------+
-| Co           | Secondary    | Assist Rate  | Off. Reb %   |
-| mplimentary  | creator to   |              |              |
-| Guard        | the High     | 3P FG%       | Height       |
-|              | Usage        |              |              |
-|              | Scorer. Has  |              |              |
-|              | the highest  |              |              |
-|              | assist rate  |              |              |
-|              | among the    |              |              |
-|              | clusters and |              |              |
-|              | a strong 3   |              |              |
-|              | point        |              |              |
-|              | shooting     |              |              |
-|              | percentage,  |              |              |
-|              | though this  |              |              |
-|              | cluster      |              |              |
-|              | doesn't take |              |              |
-|              | many 3s.     |              |              |
-|              | Weak in      |              |              |
-|              | height and   |              |              |
-|              | defensive    |              |              |
-|              | rebounding.  |              |              |
-+--------------+--------------+--------------+--------------+
-| Three Point  | A guard or   | 3P FG%       | Off. Reb %   |
-| Shooter      | wing who     |              |              |
-|              | takes a lot  | 3P FGA       | FT Rate      |
-|              | of 3's and   |              |              |
-|              | is highly    |              |              |
-|              | efficient    |              |              |
-|              | from 3. Has  |              |              |
-|              | a very low   |              |              |
-|              | FT rate and  |              |              |
-|              | does not     |              |              |
-|              | crash the    |              |              |
-|              | offensive    |              |              |
-|              | glass.       |              |              |
-+--------------+--------------+--------------+--------------+
-| Ball         | A high usage | FGA (10      | \% of FGA    |
-| Dominant     | player,      | FT-3P)       | from 3       |
-| Scorer       | typically a  |              |              |
-|              | guard or     | Point Per    |              |
-|              | wing, who is | Minute       |              |
-|              | proficient   |              |              |
-|              | at scoring   |              |              |
-|              | and creating |              |              |
-|              | for others.  |              |              |
-|              | Does not     |              |              |
-|              | crash the    |              |              |
-|              | offensive    |              |              |
-|              | glass and    |              |              |
-|              | shoots a     |              |              |
-|              | smaller      |              |              |
-|              | proportion   |              |              |
-|              | of their     |              |              |
-|              | shots from 3 |              |              |
-|              | as compared  |              |              |
-|              | to other     |              |              |
-|              | players.     |              |              |
-+--------------+--------------+--------------+--------------+
-| Traditional  | Interior     | Off. Reb %   | 3p FG%       |
-| Center       | post center  |              |              |
-|              | who shoots   | FT Rate      | Assist Rate  |
-|              | almost       |              |              |
-|              | exclusively  |              |              |
-|              | inside ten   |              |              |
-|              | feet. High   |              |              |
-|              | offensive    |              |              |
-|              | rebounding   |              |              |
-|              | rate and FT  |              |              |
-|              | rate. Does   |              |              |
-|              | not have a   |              |              |
-|              | very high    |              |              |
-|              | assist rate. |              |              |
-+--------------+--------------+--------------+--------------+
-| Versatile    | Group of     | Assist Rate  | Off. Reb %   |
-| Role Player  | players who  |              |              |
-|              | act as       | Usage Rate   | FGA (0-10    |
-|              | chameleons   |              | FT)          |
-|              | on the court |              |              |
-|              | and can do   |              |              |
-|              | whatever is  |              |              |
-|              | needed by    |              |              |
-|              | their team.  |              |              |
-|              | Often serve  |              |              |
-|              | as           |              |              |
-|              | connectors   |              |              |
-|              | on the team, |              |              |
-|              | though they  |              |              |
-|              | have lower   |              |              |
-|              | assist rates |              |              |
-|              | than the C o |              |              |
-|              | mplimentary  |              |              |
-|              | Guard.       |              |              |
-+--------------+--------------+--------------+--------------+
++-----------+-----------+-----------+-----------+
+| Cluster   | De        | High      | Low Stats |
+|           | scription | Stats     |           |
++===========+===========+===========+===========+
+| Skilled   | A big who | Def Reb.  | 3P FGA    |
+| Big       | does      | %         |           |
+|           | plays     |           |           |
+|           | both      | 2P FG %   |           |
+|           | inside    |           |           |
+|           | and       |           |           |
+|           | outside   |           |           |
+|           | of the    |           |           |
+|           | paint.    |           |           |
+|           | Has a     |           |           |
+|           | higher    |           |           |
+|           | usage and |           |           |
+|           | scores    |           |           |
+|           | more than |           |           |
+|           | the       |           |           |
+|           | Tr        |           |           |
+|           | aditional |           |           |
+|           | Center.   |           |           |
+|           | Has a     |           |           |
+|           | very high |           |           |
+|           | 2 point   |           |           |
+|           | Field     |           |           |
+|           | Goal %.   |           |           |
++-----------+-----------+-----------+-----------+
+| Comp      | Secondary | Assist    | Off. Reb  |
+| limentary | creator   | Rate      | %         |
+| Guard     | to the    |           |           |
+|           | High      | 3P FG%    | Height    |
+|           | Usage     |           |           |
+|           | Scorer.   |           |           |
+|           | Has the   |           |           |
+|           | highest   |           |           |
+|           | assist    |           |           |
+|           | rate      |           |           |
+|           | among the |           |           |
+|           | clusters  |           |           |
+|           | and a     |           |           |
+|           | strong 3  |           |           |
+|           | point     |           |           |
+|           | shooting  |           |           |
+|           | pe        |           |           |
+|           | rcentage, |           |           |
+|           | though    |           |           |
+|           | this      |           |           |
+|           | cluster   |           |           |
+|           | doesn't   |           |           |
+|           | take many |           |           |
+|           | 3s. Weak  |           |           |
+|           | in height |           |           |
+|           | and       |           |           |
+|           | defensive |           |           |
+|           | re        |           |           |
+|           | bounding. |           |           |
++-----------+-----------+-----------+-----------+
+| Three     | A guard   | 3P FG%    | Off. Reb  |
+| Point     | or wing   |           | %         |
+| Shooter   | who takes | 3P FGA    |           |
+|           | a lot of  |           | FT Rate   |
+|           | 3's and   |           |           |
+|           | is highly |           |           |
+|           | efficient |           |           |
+|           | from 3.   |           |           |
+|           | Has a     |           |           |
+|           | very low  |           |           |
+|           | FT rate   |           |           |
+|           | and does  |           |           |
+|           | not crash |           |           |
+|           | the       |           |           |
+|           | offensive |           |           |
+|           | glass.    |           |           |
++-----------+-----------+-----------+-----------+
+| Ball      | A high    | FGA (10   | \% of FGA |
+| Dominant  | usage     | FT-3P)    | from 3    |
+| Scorer    | player,   |           |           |
+|           | typically | Point Per |           |
+|           | a guard   | Minute    |           |
+|           | or wing,  |           |           |
+|           | who is    |           |           |
+|           | p         |           |           |
+|           | roficient |           |           |
+|           | at        |           |           |
+|           | scoring   |           |           |
+|           | and       |           |           |
+|           | creating  |           |           |
+|           | for       |           |           |
+|           | others.   |           |           |
+|           | Does not  |           |           |
+|           | crash the |           |           |
+|           | offensive |           |           |
+|           | glass and |           |           |
+|           | shoots a  |           |           |
+|           | smaller   |           |           |
+|           | p         |           |           |
+|           | roportion |           |           |
+|           | of their  |           |           |
+|           | shots     |           |           |
+|           | from 3 as |           |           |
+|           | compared  |           |           |
+|           | to other  |           |           |
+|           | players.  |           |           |
++-----------+-----------+-----------+-----------+
+| Tr        | Interior  | Off. Reb  | 3p FG%    |
+| aditional | post      | %         |           |
+| Center    | center    |           | Assist    |
+|           | who       | FT Rate   | Rate      |
+|           | shoots    |           |           |
+|           | almost    |           |           |
+|           | ex        |           |           |
+|           | clusively |           |           |
+|           | inside    |           |           |
+|           | ten feet. |           |           |
+|           | High      |           |           |
+|           | offensive |           |           |
+|           | r         |           |           |
+|           | ebounding |           |           |
+|           | rate and  |           |           |
+|           | FT rate.  |           |           |
+|           | Does not  |           |           |
+|           | have a    |           |           |
+|           | very high |           |           |
+|           | assist    |           |           |
+|           | rate.     |           |           |
++-----------+-----------+-----------+-----------+
+| Versatile | Group of  | Assist    | Off. Reb  |
+| Role      | players   | Rate      | %         |
+| Player    | who act   |           |           |
+|           | as        | Usage     | FGA (0-10 |
+|           | c         | Rate      | FT)       |
+|           | hameleons |           |           |
+|           | on the    |           |           |
+|           | court and |           |           |
+|           | can do    |           |           |
+|           | whatever  |           |           |
+|           | is needed |           |           |
+|           | by their  |           |           |
+|           | team.     |           |           |
+|           | Often     |           |           |
+|           | serve as  |           |           |
+|           | c         |           |           |
+|           | onnectors |           |           |
+|           | on the    |           |           |
+|           | team,     |           |           |
+|           | though    |           |           |
+|           | they have |           |           |
+|           | lower     |           |           |
+|           | assist    |           |           |
+|           | rates     |           |           |
+|           | than the  |           |           |
+|           | Comp      |           |           |
+|           | limentary |           |           |
+|           | Guard.    |           |           |
++-----------+-----------+-----------+-----------+
 
 The figure below shows how players from the original nine clusters fit
 into the six cluster model. The Ball Dominant Scorer cluster retained
@@ -860,8 +941,8 @@ shifts to a more Ball Dominant Scorer type. Mixture modeling allows us
 to capture this by assigning some probability to both clusters. This
 shows up particularly well with some of the heat maps for a particular
 team or the league as a whole because it allows us to capture the 25% or
-40% of a player that is in one cluster even though they are primarily
-listed in another cluster.
+40% of a player that is in one cluster even if they are primarily listed
+in another cluster.
 
 ## 4.2 Importance of Input Data
 
@@ -891,14 +972,14 @@ Center cluster) had a strong cluster identity in that they appeared with
 similar characteristics no matter what data, variables, or number of
 clusters was used. This idea of cluster identity is interesting,
 especially as positions in the NBA become more fluid. Many people
-believe that the NBA is becoming a "positionless game" where it does not
+believe that the NBA is becoming a "positionless" game where it does not
 really matter what position you classify a player as. However, these
 strong cluster identities suggest that there are in fact indicators that
 separate players into specific positions, even if they are not the
 traditionally five used position that have been used historically. We do
-not want to corner players only into a single cluster (the whole point
-of "soft" clusters with Gaussian mixture modeling), but it is important
-to identify that there are real differences in skill sets between
+not want to corner players into a single cluster (the whole point of
+"soft" clusters with Gaussian mixture modeling), but it is important to
+identify that there are real differences in skill sets between
 positions.
 
 ## 4.4 NBA Becoming More Heliocentric
@@ -910,16 +991,16 @@ the proportion of players who are classified as Ball Dominant Scorers.
 It appears this trend has grown even more rapidly over the past five
 years. While the NBA has always been a star dominated league, the
 development of offenses around superstar players such as James Harden,
-Luka Doncic, and Trae Young has changed the league. These starcentric
-offenses developed in an effort to be more efficient and we believe that
-over time, this trend will only continue to grow. The NBA has taken some
-measures to reduce the efficiency of this style of play, such as
-changing some of the rules relating to fouling that Harden and Young
-have so famously taken advantage of. Despite the NBA's effort, we
-believe that the league as a whole (especially as it relates to offense)
-will continue to gradually grow more starcentric. Further research
-should be done in the future to investigate this trend and potential
-ceilings on this trend.
+Luka Doncic, and Trae Young has changed the league. These heliocentric
+offenses developed in an effort to make offenses more efficient and we
+believe that over time, this trend will only continue to grow. The NBA
+has taken some measures to reduce the efficiency of this style of play,
+such as changing some of the rules relating to fouling that Harden and
+Young have so famously taken advantage of [@Rucker]. Despite the NBA's
+effort, we believe that the league as a whole (especially as it relates
+to offense) will continue to gradually grow more heliocentric. Further
+research should be done in the future to investigate this trend and
+potential ceilings on this trend.
 
 # 5. Conclusion
 
@@ -929,7 +1010,8 @@ more than just the traditional five positions. While we hypothesized
 that NBA players were better clustered into 6 clusters, we found that
 they are better clustered into the original nine clusters that
 @kalman_nba_2020 used. However, as the NBA continues to evolve, we
-believe that a reduction in clusters would be optimal.
+believe that a reduction in clusters (or at least a
+renaming/reclassification of clusters) would be optimal.
 
 Further work on NBA player clustering should be done using particular
 player skills and not just rate and aggregate statistics. Sports Info
