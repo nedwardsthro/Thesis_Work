@@ -1,7 +1,6 @@
 ---
 title: "NBA Player Clustering Using Gaussian Mixture Modeling"
 author: "Noah Edwards-Thro"
-date: "1/23/2022"
 output: pdf_document
 editor_options: 
   markdown: 
@@ -194,7 +193,8 @@ possession statistics for points and field goal attempts). Using per 36
 minute statistics will lead to slight differences in scale compared to
 using per 100 possession statistics as was done by @kalman_nba_2020,
 however both are rate statistics, so the discrepancy will likely not
-have a large impact on the final results.\
+have a large impact on the final results.
+
 The variables were a combination of offensive, defensive, and aggregate
 statistics and all statistics were calculated as rates except for player
 height. The drawback of these rate statistics is that they does not take
@@ -206,79 +206,84 @@ being able to play efficiently for 35 minutes). Below is a table
 displaying all of the variables included as well as a short description
 about the variable.
 
-+----------------+-------------------------------------------------+
-| **Variable**   | **Description**                                 |
-+================+=================================================+
-| Height         | Player height, in inches                        |
-+----------------+-------------------------------------------------+
-| Offensive      | \% of available offensive rebounds a player     |
-| Rebound Rate   | gets while on the floor                         |
-+----------------+-------------------------------------------------+
-| Defensive      | \% of available defensive rebounds a player     |
-| Rebound Rate   | gets while on the floor                         |
-+----------------+-------------------------------------------------+
-| Assist Rate    | \% of teammate field goals that a player        |
-|                | assisted while on the floor                     |
-+----------------+-------------------------------------------------+
-| Steal Rate     | \% of opponent possessions that end with a      |
-|                | steal b the player while on the floor           |
-+----------------+-------------------------------------------------+
-| Block Rate     | \% of opponent field goal attempted blocked by  |
-|                | the player while on the floor                   |
-+----------------+-------------------------------------------------+
-| Turnover Rate  | Turnovers committed per 100 offensive           |
-|                | possessions                                     |
-+----------------+-------------------------------------------------+
-| Points         | Points scored per 100 offensive possessions     |
-+----------------+-------------------------------------------------+
-| Usage Rate     | \% of offensive team possessions used by the    |
-|                | player while on the floor                       |
-+----------------+-------------------------------------------------+
-| Player         | Per-minute production standardized such that    |
-| Efficiency     | the league average is 15                        |
-| Rating         |                                                 |
-+----------------+-------------------------------------------------+
-| Free Throw     | Number of free throws made per field goals      |
-| Rate           | attempted                                       |
-+----------------+-------------------------------------------------+
-| Free Throw     | Number of free throws made per free throw       |
-| Percentage     | attempt                                         |
-+----------------+-------------------------------------------------+
-| Field Goals    | Number of field goals attempted per 100         |
-| Attempted      | possessions                                     |
-+----------------+-------------------------------------------------+
-| 2FG%           | Number of two-point field goals made per        |
-|                | attempt                                         |
-+----------------+-------------------------------------------------+
-| 3FG%           | Number of three-point field goals made per      |
-|                | attempt                                         |
-+----------------+-------------------------------------------------+
-| 2FG Assist     | \% of two-point field goals that are assisted   |
-| Rate           |                                                 |
-+----------------+-------------------------------------------------+
-| 3FGA%          | \% of field goal attempts that are three-point  |
-|                | attempts                                        |
-+----------------+-------------------------------------------------+
-| Corner 3FGA%   | \% of three point-field goal attempts that are  |
-|                | from the corner                                 |
-+----------------+-------------------------------------------------+
-| 3FG Assist     | \% of three-point field goals that are assisted |
-| Rate           |                                                 |
-+----------------+-------------------------------------------------+
-| Dunk Attempt   | \% of all field goal attempts that are dunks    |
-| Rate           |                                                 |
-+----------------+-------------------------------------------------+
-| 0-3 ft FGA%    | \% of all field goal attempts between zero and  |
-|                | three feet from the basket                      |
-+----------------+-------------------------------------------------+
-| 3-10 ft FGA%   | \% of all field goal attempts between three and |
-|                | ten feet from the basket                        |
-+----------------+-------------------------------------------------+
-| 10ft-3p FGA%   | \% of all field goal attempts between ten feet  |
-|                | from the basket and the three-point line        |
-+----------------+-------------------------------------------------+
++----------------+------------------------------------------------+
+| **Variable**   | **Description**                                |
++================+================================================+
+| Height         | Player height, in inches                       |
++----------------+------------------------------------------------+
+| Offensive      | \% of available offensive rebounds a player    |
+| Rebound Rate   | gets while on the floor                        |
++----------------+------------------------------------------------+
+| Defensive      | \% of available defensive rebounds a player    |
+| Rebound Rate   | gets while on the floor                        |
++----------------+------------------------------------------------+
+| Assist Rate    | \% of teammate field goals that a player       |
+|                | assisted while on the floor                    |
++----------------+------------------------------------------------+
+| Steal Rate     | \% of opponent possessions that end with a     |
+|                | steal b the player while on the floor          |
++----------------+------------------------------------------------+
+| Block Rate     | \% of opponent field goal attempted blocked by |
+|                | the player while on the floor                  |
++----------------+------------------------------------------------+
+| Turnover Rate  | Turnovers committed per 100 offensive          |
+|                | possessions                                    |
++----------------+------------------------------------------------+
+| Points         | Points scored per 100 offensive possessions    |
++----------------+------------------------------------------------+
+| Usage Rate     | \% of offensive team possessions used by the   |
+|                | player while on the floor                      |
++----------------+------------------------------------------------+
+| Player         | Per-minute production standardized such that   |
+| Efficiency     | the league average is 15                       |
+| Rating         |                                                |
++----------------+------------------------------------------------+
+| Free Throw     | Number of free throws made per field goals     |
+| Rate           | attempted                                      |
++----------------+------------------------------------------------+
+| Free Throw     | Number of free throws made per free throw      |
+| Percentage     | attempt                                        |
++----------------+------------------------------------------------+
+| Field Goals    | Number of field goals attempted per 100        |
+| Attempted      | possessions                                    |
++----------------+------------------------------------------------+
+| 2FG%           | Number of two-point field goals made per       |
+|                | attempt                                        |
++----------------+------------------------------------------------+
+| 3FG%           | Number of three-point field goals made per     |
+|                | attempt                                        |
++----------------+------------------------------------------------+
+| 2FG Assist     | \% of two-point field goals that are assisted  |
+| Rate           |                                                |
++----------------+------------------------------------------------+
+| 3FGA%          | \% of field goal attempts that are three-point |
+|                | attempts                                       |
++----------------+------------------------------------------------+
+| Corner 3FGA%   | \% of three point-field goal attempts that are |
+|                | from the corner                                |
++----------------+------------------------------------------------+
+| 3FG Assist     | \% of three-point field goals that are         |
+| Rate           | assisted                                       |
++----------------+------------------------------------------------+
+| Dunk Attempt   | \% of all field goal attempts that are dunks   |
+| Rate           |                                                |
++----------------+------------------------------------------------+
+| 0-3 ft FGA%    | \% of all field goal attempts between zero and |
+|                | three feet from the basket                     |
++----------------+------------------------------------------------+
+| 3-10 ft FGA%   | \% of all field goal attempts between three    |
+|                | and ten feet from the basket                   |
++----------------+------------------------------------------------+
+| 10ft-3p FGA%   | \% of all field goal attempts between ten feet |
+|                | from the basket and the three-point line       |
++----------------+------------------------------------------------+
 
 : Recreation of Table 1 from @kalman_nba_2020
+
+Finally, since we are modeling with 23 variables on all different
+scales, we took the important step of scaling each variable as
+@kalman_nba_2020 did so that each statistic would be weighted
+appropriately relative to the others.
 
 ### 2.2.3 Gaussian Mixture Clustering
 
@@ -689,15 +694,15 @@ pair of models (the model with 10 seasons worth of data and the model
 with 13 seasons worth of data) with reduced variables compared to the
 cluster consistency of the original pair of model. When we did this we
 ound that
-`r round(sum(reduced_preds%>%summarize(First_Prediction == New_Prediction))/nrow(reduced_preds)*100, 2)`
-percent of the players remained in the same cluster. This is
-considerably lower than the
-`r round(sum(scaled_combined_preds%>%summarize(First_Prediction == New_Prediction))/nrow(scaled_combined_preds)*100, 2)`
-percent of the players remained in the same cluster in the original pair
-of models. We hypothesize that this lower cluster consistency is due to
-the variable reduction and that the smaller number of variables is
-unable to capture all of the nuances that keep a cluster consistent from
-one model to another.
+`r round(sum(reduced_preds%>%summarize(First_Prediction == New_Prediction))/nrow(reduced_preds)*100, 2)`%
+of the players remained in the same cluster. This is considerably lower
+than the
+`r round(sum(scaled_combined_preds%>%summarize(First_Prediction == New_Prediction))/nrow(scaled_combined_preds)*100, 2)`%
+of the players remained in the same cluster in the original pair of
+models. We hypothesize that this lower cluster consistency is due to the
+variable reduction and that the smaller number of variables is unable to
+capture all of the nuances that keep a cluster consistent from one model
+to another.
 
 ### 3.2.2 Cluster Reduction
 
@@ -708,162 +713,64 @@ Dominant Scorer, Traditional Center, and Versatile Role Player. The
 table below outlines each of the clusters and the strengths and
 weaknesses that characterize each cluster.
 
-+-----------+-----------+-----------+-----------+
-| Cluster   | De        | High      | Low Stats |
-|           | scription | Stats     |           |
-+===========+===========+===========+===========+
-| Skilled   | A big who | Def Reb.  | 3P FGA    |
-| Big       | does      | %         |           |
-|           | plays     |           |           |
-|           | both      | 2P FG %   |           |
-|           | inside    |           |           |
-|           | and       |           |           |
-|           | outside   |           |           |
-|           | of the    |           |           |
-|           | paint.    |           |           |
-|           | Has a     |           |           |
-|           | higher    |           |           |
-|           | usage and |           |           |
-|           | scores    |           |           |
-|           | more than |           |           |
-|           | the       |           |           |
-|           | Tr        |           |           |
-|           | aditional |           |           |
-|           | Center.   |           |           |
-|           | Has a     |           |           |
-|           | very high |           |           |
-|           | 2 point   |           |           |
-|           | Field     |           |           |
-|           | Goal %.   |           |           |
-+-----------+-----------+-----------+-----------+
-| Comp      | Secondary | Assist    | Off. Reb  |
-| limentary | creator   | Rate      | %         |
-| Guard     | to the    |           |           |
-|           | High      | 3P FG%    | Height    |
-|           | Usage     |           |           |
-|           | Scorer.   |           |           |
-|           | Has the   |           |           |
-|           | highest   |           |           |
-|           | assist    |           |           |
-|           | rate      |           |           |
-|           | among the |           |           |
-|           | clusters  |           |           |
-|           | and a     |           |           |
-|           | strong 3  |           |           |
-|           | point     |           |           |
-|           | shooting  |           |           |
-|           | pe        |           |           |
-|           | rcentage, |           |           |
-|           | though    |           |           |
-|           | this      |           |           |
-|           | cluster   |           |           |
-|           | doesn't   |           |           |
-|           | take many |           |           |
-|           | 3s. Weak  |           |           |
-|           | in height |           |           |
-|           | and       |           |           |
-|           | defensive |           |           |
-|           | re        |           |           |
-|           | bounding. |           |           |
-+-----------+-----------+-----------+-----------+
-| Three     | A guard   | 3P FG%    | Off. Reb  |
-| Point     | or wing   |           | %         |
-| Shooter   | who takes | 3P FGA    |           |
-|           | a lot of  |           | FT Rate   |
-|           | 3's and   |           |           |
-|           | is highly |           |           |
-|           | efficient |           |           |
-|           | from 3.   |           |           |
-|           | Has a     |           |           |
-|           | very low  |           |           |
-|           | FT rate   |           |           |
-|           | and does  |           |           |
-|           | not crash |           |           |
-|           | the       |           |           |
-|           | offensive |           |           |
-|           | glass.    |           |           |
-+-----------+-----------+-----------+-----------+
-| Ball      | A high    | FGA (10   | \% of FGA |
-| Dominant  | usage     | FT-3P)    | from 3    |
-| Scorer    | player,   |           |           |
-|           | typically | Point Per |           |
-|           | a guard   | Minute    |           |
-|           | or wing,  |           |           |
-|           | who is    |           |           |
-|           | p         |           |           |
-|           | roficient |           |           |
-|           | at        |           |           |
-|           | scoring   |           |           |
-|           | and       |           |           |
-|           | creating  |           |           |
-|           | for       |           |           |
-|           | others.   |           |           |
-|           | Does not  |           |           |
-|           | crash the |           |           |
-|           | offensive |           |           |
-|           | glass and |           |           |
-|           | shoots a  |           |           |
-|           | smaller   |           |           |
-|           | p         |           |           |
-|           | roportion |           |           |
-|           | of their  |           |           |
-|           | shots     |           |           |
-|           | from 3 as |           |           |
-|           | compared  |           |           |
-|           | to other  |           |           |
-|           | players.  |           |           |
-+-----------+-----------+-----------+-----------+
-| Tr        | Interior  | Off. Reb  | 3p FG%    |
-| aditional | post      | %         |           |
-| Center    | center    |           | Assist    |
-|           | who       | FT Rate   | Rate      |
-|           | shoots    |           |           |
-|           | almost    |           |           |
-|           | ex        |           |           |
-|           | clusively |           |           |
-|           | inside    |           |           |
-|           | ten feet. |           |           |
-|           | High      |           |           |
-|           | offensive |           |           |
-|           | r         |           |           |
-|           | ebounding |           |           |
-|           | rate and  |           |           |
-|           | FT rate.  |           |           |
-|           | Does not  |           |           |
-|           | have a    |           |           |
-|           | very high |           |           |
-|           | assist    |           |           |
-|           | rate.     |           |           |
-+-----------+-----------+-----------+-----------+
-| Versatile | Group of  | Assist    | Off. Reb  |
-| Role      | players   | Rate      | %         |
-| Player    | who act   |           |           |
-|           | as        | Usage     | FGA (0-10 |
-|           | c         | Rate      | FT)       |
-|           | hameleons |           |           |
-|           | on the    |           |           |
-|           | court and |           |           |
-|           | can do    |           |           |
-|           | whatever  |           |           |
-|           | is needed |           |           |
-|           | by their  |           |           |
-|           | team.     |           |           |
-|           | Often     |           |           |
-|           | serve as  |           |           |
-|           | c         |           |           |
-|           | onnectors |           |           |
-|           | on the    |           |           |
-|           | team,     |           |           |
-|           | though    |           |           |
-|           | they have |           |           |
-|           | lower     |           |           |
-|           | assist    |           |           |
-|           | rates     |           |           |
-|           | than the  |           |           |
-|           | Comp      |           |           |
-|           | limentary |           |           |
-|           | Guard.    |           |           |
-+-----------+-----------+-----------+-----------+
++------------------+---------------------------+----------+----------+
+| Cluster          | Description               | High     | Low      |
+|                  |                           | Stats    | Stats    |
++==================+===========================+==========+==========+
+| Skilled Big      | A big who does plays both | Def Reb. | 3P FGA   |
+|                  | inside and outside of the | %        |          |
+|                  | paint. Has a higher usage |          |          |
+|                  | and scores more than the  | 2P FG %  |          |
+|                  | Traditional Center. Has a |          |          |
+|                  | very high 2 point Field   |          |          |
+|                  | Goal %.                   |          |          |
++------------------+---------------------------+----------+----------+
+| Complimentary    | Secondary creator to the  | Assist   | Off. Reb |
+| Guard            | High Usage Scorer. Has    | Rate     | %        |
+|                  | the highest assist rate   |          |          |
+|                  | among the clusters and a  | 3P FG%   | Height   |
+|                  | strong 3 point shooting   |          |          |
+|                  | percentage, though this   |          |          |
+|                  | cluster doesn't take many |          |          |
+|                  | 3s. Weak in height and    |          |          |
+|                  | defensive rebounding.     |          |          |
++------------------+---------------------------+----------+----------+
+| Three Point      | A guard or wing who takes | 3P FG%   | Off. Reb |
+| Shooter          | a lot of 3's and is       |          | %        |
+|                  | highly efficient from 3.  | 3P FGA   |          |
+|                  | Has a very low FT rate    |          | FT Rate  |
+|                  | and does not crash the    |          |          |
+|                  | offensive glass.          |          |          |
++------------------+---------------------------+----------+----------+
+| Ball Dominant    | A high usage player,      | FGA (10  | \% of    |
+| Scorer           | typically a guard or      | FT-3P)   | FGA from |
+|                  | wing, who is proficient   |          | 3        |
+|                  | at scoring and creating   | Point    |          |
+|                  | for others. Does not      | Per      |          |
+|                  | crash the offensive glass | Minute   |          |
+|                  | and shoots a smaller      |          |          |
+|                  | proportion of their shots |          |          |
+|                  | from 3 as compared to     |          |          |
+|                  | other players.            |          |          |
++------------------+---------------------------+----------+----------+
+| Traditional      | Interior post center who  | Off. Reb | 3p FG%   |
+| Center           | shoots almost exclusively | %        |          |
+|                  | inside ten feet. High     |          | Assist   |
+|                  | offensive rebounding rate | FT Rate  | Rate     |
+|                  | and FT rate. Does not     |          |          |
+|                  | have a very high assist   |          |          |
+|                  | rate.                     |          |          |
++------------------+---------------------------+----------+----------+
+| Versatile Role   | Group of players who act  | Assist   | Off. Reb |
+| Player           | as chameleons on the      | Rate     | %        |
+|                  | court and can do whatever |          |          |
+|                  | is needed by their team.  | Usage    | FGA      |
+|                  | Often serve as connectors | Rate     | (0-10    |
+|                  | on the team, though they  |          | FT)      |
+|                  | have lower assist rates   |          |          |
+|                  | than the Complimentary    |          |          |
+|                  | Guard.                    |          |          |
++------------------+---------------------------+----------+----------+
 
 The figure below shows how players from the original nine clusters fit
 into the six cluster model. The Ball Dominant Scorer cluster retained
@@ -875,23 +782,23 @@ also captures some elite scorers that were previously not in this
 cluster, such as Klay Thompson and CJ McCollum. In the original model,
 Thompson was classified as a Three Point Shooting Guard in the majority
 of his seasons and McCollum was classified as a High Usage Guard. One
-can debate whether or not we would classify these players as High Usage
-Scorers based on expert knowledge but it is not surprising that they are
-classified as such with a reduction in clusters. The Complimentary Guard
-cluster is mostly a collection of Floor Generals, Three Point Shooting
-Guards, and High Usage Guards, about what we expected it would be. The
-Skilled Big cluster too is largely what we thought it would be - a mix
-of Mid Range Bigs, Skilled Forwards, and a few Traditional Centers. The
-Three Point Shooter cluster is about what we predicted it would be,
-though more Mid Range Bigs ended up being classified in this cluster
-than we hypothesized. This suggests that a better name for this cluster
-might be "Floor Spacer" rather than "Three Point Shooter". The
-Traditional Center cluster is made up almost entirely of Traditional
-Centers from the original model, again demonstrating a strong cluster
-identity for Traditional Centers. Finally, the Versatile Role Player
-cluster retained the majority of the Versatile Role Players from the
-original model and added at least a few of players from almost every
-other cluster.
+can debate whether or not we would classify these players as Ball
+Dominant Scorers based on expert knowledge but it is not surprising that
+they are classified as such with a reduction in clusters. The
+Complimentary Guard cluster is mostly a collection of Floor Generals,
+Three Point Shooting Guards, and High Usage Guards, about what we
+expected it would be. The Skilled Big cluster too is largely what we
+thought it would be - a mix of Mid Range Bigs, Skilled Forwards, and a
+few Traditional Centers. The Three Point Shooter cluster is about what
+we predicted it would be, though more Mid Range Bigs ended up being
+classified in this cluster than we hypothesized. This suggests that a
+better name for this cluster might be "Floor Spacer" rather than "Three
+Point Shooter". The Traditional Center cluster is made up almost
+entirely of Traditional Centers from the original model, again
+demonstrating a strong cluster identity for Traditional Centers.
+Finally, the Versatile Role Player cluster retained the majority of the
+Versatile Role Players from the original model and added at least a few
+of players from almost every other cluster.
 
 ```{r, message = FALSE, echo=FALSE, warning=FALSE}
 load("RDAs/models_1_6.rda")
